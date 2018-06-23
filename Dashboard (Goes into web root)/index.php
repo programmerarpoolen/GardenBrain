@@ -184,6 +184,14 @@ $sec = "10";
 			$irrigate_now_array = mysqli_fetch_array($irrigate_now_result);
 			$irrigationstart = $irrigate_now_array[0];
 			// echo $irrigationstart;
+	      
+	      		if ($irrigationstart == 0)
+				{
+					$tapicon = "<img src='tapon.png'></img>";
+				}	else 
+				{
+					$tapicon = "<img src='tapoff.png'></img>";
+				}
 			
 			$weather_now_result = mysqli_query($con,"SELECT WEATHERNOW FROM weather_settings");
 			$weather_now_array = mysqli_fetch_array($weather_now_result);
@@ -339,7 +347,7 @@ $sec = "10";
 				<td height="25">&nbsp;</td><td></td>
 			</tr>
 			<tr>
-				<td width="200">&nbsp;</td><td class="idata" width="195" height="200"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><img src="tapon.png"></img></button></td><td width="190">&nbsp;</td>
+				<td width="200">&nbsp;</td><td class="idata" width="195" height="200"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><?php echo $tapicon ?></button></td><td width="190">&nbsp;</td>
 			</tr>
 		</table>
 		<table>
