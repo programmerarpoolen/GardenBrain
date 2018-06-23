@@ -1,0 +1,15 @@
+Add program to autostart:
+Edit:
+sudo nano /etc/rc.local
+Add these lines before "exit 0":
+
+# Running the weather script
+sudo python /home/pi/GardenBrain/weather.py &
+
+Be sure to add the "&" after the programs URL or the Pi will never boot up!
+
+Add autostart of the Chromium web browser in Kiosk mode:
+Edit: 
+sudo nano .config/lxsession/LXDE-pi/autostart
+Add the following line after "@xscreensaver -no-splash":
+@/usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost
