@@ -1,5 +1,5 @@
 # GardenBrain
-Raspberry Pi program for smart garden irrigation using Sense HAT, a 1-channel relay and a 7" touchscreen, with a web dashboard interface
+Raspberry Pi program for smart garden irrigation using Sense HAT, a 1-channel relay and a 7" touchscreen, with a web dashboard interface.
 
 This project runs on a Raspberry Pi3 with LAMP server and Chromium web browser installed.
 
