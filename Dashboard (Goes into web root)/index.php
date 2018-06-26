@@ -185,15 +185,7 @@ $sec = "10";
 			$irrigationstart = $irrigate_now_array[0];
 			// echo $irrigationstart;
 	      
-	      		if ($irrigationstart == 0)
-				{
-					$tapicon = "<img src='tapon.png'></img>";
-				}	else 
-				{
-					$tapicon = "<img src='tapoff.png'></img>";
-				}
-			
-			$weather_now_result = mysqli_query($con,"SELECT WEATHERNOW FROM weather_settings");
+	      		$weather_now_result = mysqli_query($con,"SELECT WEATHERNOW FROM weather_settings");
 			$weather_now_array = mysqli_fetch_array($weather_now_result);
 			
 			//Setting the correct uptime format
@@ -252,9 +244,32 @@ $sec = "10";
 					$dirritime = "0";
 				}
 			
-			// This part checks to see if a button has been clicked and runs PHP functions as a result
-			if(isset($_GET['tap'])){irrigate_now($irrigationstart);}
-			if(isset($_GET['rboot'])){runreboot();}
+			// This part checks to see if a button has been clicked and runs irrigation functions as a result as well as setting tap icon color
+			if (isset($_GET['tap'])) 
+				{
+					irrigate_now($irrigationstart);
+					if ($irrigationstart == 0)
+						{
+							$tapicon = "<img src='tapoff.png'></img>";
+						}	else 
+						{
+							$tapicon = "<img src='tapon.png'></img>";
+						}
+				} else {
+					if ($irrigationstart == 0)
+						{
+							$tapicon = "<img src='tapon.png'></img>";
+						}	else 
+						{
+							$tapicon = "<img src='tapoff.png'></img>";
+						}
+				}
+			
+			// This part checks to see if a button has been clicked and runs reboot functions as a result			
+			if (isset($_GET['rboot']))
+				{
+					runreboot();
+				}
 			
 			// This function toggles the IRRIGATE_NOW value in database
 			function irrigate_now($irrigationstart)
@@ -269,10 +284,12 @@ $sec = "10";
 					{
 						$sql = "UPDATE weather_settings SET IRRIGATE_NOW='1'";
 						mysqli_query($con, $sql);
+						$tapicon = "<img src='tapoff.png'></img>";
 					}	else 
 					{
 						$sql = "UPDATE weather_settings SET IRRIGATE_NOW='2'";
 						mysqli_query($con, $sql);
+						$tapicon = "<img src='tapon.png'></img>";
 					}
 					
 				// Closing the MySQL connection
