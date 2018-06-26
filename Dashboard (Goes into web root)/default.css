@@ -1,0 +1,146 @@
+@font-face {
+    font-family: "GardenBrain";
+    src: url(http://localhost/font.ttf) format("truetype");
+}
+@media screen and (min-width: 1000px) and (max-width: 1100px) and (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  	background-color: #2e2f31;
+  	color: #ffffff;
+  	}
+	.tdheight1 {
+      height: 150;
+	}
+	.tdheight2 {
+      height: 120;
+	}
+	.tdheight3 {
+      height: 50;
+	}
+	.tdheight4 {
+      height: 67;
+	  width: 50%;
+	}
+	.tdheight5 {
+      height: 15;
+	}
+}
+@media screen and (min-width: 1100px) and (max-width: 5000px) and (orientation: landscape) {
+  html {
+    width: 100vh;
+    position: fixed;
+    top: -70px;
+    left: 50%;
+  	background-color: #2e2f31;
+  	color: #ffffff;
+	margin-left: -300px;
+    -moz-transform: scale(0.85);
+    -webkit-transform: scale(0.85);
+    transform: scale(0.85);
+  	}
+	.tdheight1 {
+      height: 170;
+	}
+	.tdheight2 {
+      height: 125;
+	}
+	.tdheight3 {
+      height: 55;
+	}
+	.tdheight4 {
+      height: 67;
+	  width: 50%;
+	}
+	.tdheight5 {
+      height: 15;
+	}
+}
+@media screen and (min-width: 300px) and (max-width: 1000px) and (orientation: portrait) {
+  html {
+    width: 100vh;
+    position: fixed;
+    top: 450;
+    left: 50%;
+  	background-color: #2e2f31;
+  	color: #ffffff;
+	margin-left: 0;
+    -moz-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+  	}
+	.tdheight1 {
+      height: 170;
+	}
+	.tdheight2 {
+      height: 125;
+	}
+	.tdheight3 {
+      height: 55;
+	}
+	.tdheight4 {
+      height: 67;
+	  width: 50%;
+	}
+	.tdheight5 {
+      height: 15;
+	}
+}
+.main {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:1.2em;
+  color:#ffffff;
+}
+body {
+  background-image: url("background.jpg");
+  background-repeat: no-repeat;
+  background-color: #2e2f31;
+  color: #ffffff;
+}
+table {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:0.7em;
+  color: #ffffff;
+}
+sup {
+  font-size:0.5em;
+}
+.bigtemp {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:7.5em;
+  color: #76c83f;
+}
+.wdata {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:3.4em;
+  color: #bebcbc;
+}
+.idata {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:2.6em;
+  color: #bebcbc;
+}
+div.absolute {
+  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size:7.5em;
+  color: #76c83f;
+  position: absolute;
+  top: 80px;
+  right: 350;
+  width: 200px;
+  height: 80px;
+}
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+}
