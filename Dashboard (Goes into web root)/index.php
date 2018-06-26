@@ -284,12 +284,10 @@ $sec = "10";
 					{
 						$sql = "UPDATE weather_settings SET IRRIGATE_NOW='1'";
 						mysqli_query($con, $sql);
-						$tapicon = "<img src='tapoff.png'></img>";
 					}	else 
 					{
 						$sql = "UPDATE weather_settings SET IRRIGATE_NOW='2'";
 						mysqli_query($con, $sql);
-						$tapicon = "<img src='tapon.png'></img>";
 					}
 					
 				// Closing the MySQL connection
