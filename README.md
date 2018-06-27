@@ -13,8 +13,9 @@ In my garden, it powers a submersible pump that pumps water to a 1/4" drip irrig
 
 Irrigation can be started manually as well though the dashboard, where the Pi can be rebooted as well.
 
-This is a work in pregress though and the web interface does need work. The graphs are currently static and these need to be fixed so that they work properly. Also the irrigation time thresholds need to be adjusted in the functions.py file as well, to adjust your actual needs.
+This is a work in pregress though and the web interface does need work and it would be nice if the user could click the graphs for humidity and pressure to move that graph and data up and switch place with the temperature data that is currently there. The irrigation time thresholds need to be adjusted in the functions.py file as well, to adjust your actual needs.
 
 And this is my first ever RPi project, my first ever work in Python and PHP, I've never worked with databases myself and it's been 20 years since I took that HTML/CSS course, SO please don't hate, be kind and help out to improve the project if you can.
+Cleaning the code is helping too, in case you who are reading this feels like contributing :)
 
-Especially with the graphs and data usage to get weather icon correct and dashboard more useful, but also with how to best set irrigation times in the functions.py file in the getseconds function.
+Especially helpful is contributions around data usage to get weather icon correct and dashboard more useful, but also with how to best set irrigation times in the functions.py file in the getseconds function.
