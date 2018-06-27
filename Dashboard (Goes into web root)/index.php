@@ -7,6 +7,7 @@ $sec = "10";
     	<meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
 		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 		<link href="default.css" rel="stylesheet" type="text/css">
+		<script src="Chart.js"></script>
     </head>
     <body>
 	    <?php
@@ -26,20 +27,25 @@ $sec = "10";
 			// Fetching the data needed to show the dashboard
 			$uptime_result = mysqli_query($con,"SELECT UPTIME FROM weather_settings");
 			$uptime_array = mysqli_fetch_array($uptime_result);
+			$uptime_result->close();
 			
 			$irrigation_result = mysqli_query($con,"SELECT NIGHT_SECONDS,DAY_EXTRA FROM weather_settings");
 			$irrigation_array = mysqli_fetch_array($irrigation_result);
+			$irrigation_result->close();
 			
 			$data_result = mysqli_query($con,"SELECT * FROM weather_data ORDER BY DATETIME DESC");
 			$data_array = mysqli_fetch_array($data_result);
+			$data_result->close();
 			
 			$irrigate_now_result = mysqli_query($con,"SELECT IRRIGATE_NOW FROM weather_settings");
 			$irrigate_now_array = mysqli_fetch_array($irrigate_now_result);
 			$irrigationstart = $irrigate_now_array[0];
+			$irrigate_now_result->close();
 			// echo $irrigationstart;
-	      
-	      		$weather_now_result = mysqli_query($con,"SELECT WEATHERNOW FROM weather_settings");
+			
+			$weather_now_result = mysqli_query($con,"SELECT WEATHERNOW FROM weather_settings");
 			$weather_now_array = mysqli_fetch_array($weather_now_result);
+			$weather_now_result->close();
 			
 			//Setting the correct uptime format
 			$time1 = strtotime($uptime_array[0]);
@@ -60,6 +66,131 @@ $sec = "10";
 				}	elseif ($weather_now_array[0] == 3) {
 					$weatherimage = "3.png";
 				}
+				
+			// Fetching the data needed to show the weather data in the dashboard
+			$data_result1 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 6 HOUR ORDER BY DATETIME LIMIT 1");
+			$result1_array = mysqli_fetch_array($data_result1);
+			$data_result2 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 12 HOUR ORDER BY DATETIME LIMIT 1");
+			$result2_array = mysqli_fetch_array($data_result2);
+			$data_result3 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 18 HOUR ORDER BY DATETIME LIMIT 1");
+			$result3_array = mysqli_fetch_array($data_result3);
+			$data_result4 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 24 HOUR ORDER BY DATETIME LIMIT 1");
+			$result4_array = mysqli_fetch_array($data_result4);
+			$data_result5 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 30 HOUR ORDER BY DATETIME LIMIT 1");
+			$result5_array = mysqli_fetch_array($data_result5);
+			$data_result6 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 36 HOUR ORDER BY DATETIME LIMIT 1");
+			$result6_array = mysqli_fetch_array($data_result6);
+			$data_result7 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 42 HOUR ORDER BY DATETIME LIMIT 1");
+			$result7_array = mysqli_fetch_array($data_result7);
+			$data_result8 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 48 HOUR ORDER BY DATETIME LIMIT 1");
+			$result8_array = mysqli_fetch_array($data_result8);
+			$data_result9 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 54 HOUR ORDER BY DATETIME LIMIT 1");
+			$result9_array = mysqli_fetch_array($data_result9);
+			$data_result10 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 60 HOUR ORDER BY DATETIME LIMIT 1");
+			$result10_array = mysqli_fetch_array($data_result10);
+			$data_result11 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 66 HOUR ORDER BY DATETIME LIMIT 1");
+			$result11_array = mysqli_fetch_array($data_result11);
+			$data_result12 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 72 HOUR ORDER BY DATETIME LIMIT 1");
+			$result12_array = mysqli_fetch_array($data_result12);
+			$data_result13 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 78 HOUR ORDER BY DATETIME LIMIT 1");
+			$result13_array = mysqli_fetch_array($data_result13);
+			$data_result14 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 84 HOUR ORDER BY DATETIME LIMIT 1");
+			$result14_array = mysqli_fetch_array($data_result14);
+			$data_result15 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 90 HOUR ORDER BY DATETIME LIMIT 1");
+			$result15_array = mysqli_fetch_array($data_result15);
+			$data_result16 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 96 HOUR ORDER BY DATETIME LIMIT 1");
+			$result16_array = mysqli_fetch_array($data_result16);
+			$data_result17 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 102 HOUR ORDER BY DATETIME LIMIT 1");
+			$result17_array = mysqli_fetch_array($data_result17);
+			$data_result18 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 108 HOUR ORDER BY DATETIME LIMIT 1");
+			$result18_array = mysqli_fetch_array($data_result18);
+			$data_result19 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 114 HOUR ORDER BY DATETIME LIMIT 1");
+			$result19_array = mysqli_fetch_array($data_result19);
+			$data_result20 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 120 HOUR ORDER BY DATETIME LIMIT 1");
+			$result20_array = mysqli_fetch_array($data_result20);
+			$data_result21 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 126 HOUR ORDER BY DATETIME LIMIT 1");
+			$result21_array = mysqli_fetch_array($data_result21);
+			$data_result22 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 132 HOUR ORDER BY DATETIME LIMIT 1");
+			$result22_array = mysqli_fetch_array($data_result22);
+			$data_result23 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 138 HOUR ORDER BY DATETIME LIMIT 1");
+			$result23_array = mysqli_fetch_array($data_result23);
+			$data_result24 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 144 HOUR ORDER BY DATETIME LIMIT 1");
+			$result24_array = mysqli_fetch_array($data_result24);
+			$data_result25 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 150 HOUR ORDER BY DATETIME LIMIT 1");
+			$result25_array = mysqli_fetch_array($data_result25);
+			$data_result26 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 156 HOUR ORDER BY DATETIME LIMIT 1");
+			$result26_array = mysqli_fetch_array($data_result26);
+			$data_result27 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 162 HOUR ORDER BY DATETIME LIMIT 1");
+			$result27_array = mysqli_fetch_array($data_result27);
+			$data_result28 = mysqli_query($con,"SELECT TEMPERATURE, HUMIDITY, PRESSURE FROM weather_data WHERE DATETIME > NOW() - INTERVAL 168 HOUR ORDER BY DATETIME LIMIT 1");
+			$result28_array = mysqli_fetch_array($data_result28);
+
+			// getting the current day and setting weekdays accordingly
+			$thisday = date('l');
+			if ($thisday == "Monday")
+			{
+				$today = "mon";
+				$day2 = "tue";
+				$day3 = "wed";
+				$day4 = "thu";
+				$day5 = "fri";
+				$day6 = "sat";
+				$day7 = "sun";
+			} elseif ($thisday == "Tuesday")
+			{
+				$today = "tue";
+				$day2 = "wed";
+				$day3 = "thu";
+				$day4 = "fri";
+				$day5 = "sat";
+				$day6 = "sun";
+				$day7 = "mon";
+			} elseif ($thisday == "Wednesday")
+			{
+				$today = "wed";
+				$day2 = "thu";
+				$day3 = "fri";
+				$day4 = "sat";
+				$day5 = "sun";
+				$day6 = "mon";
+				$day7 = "tue";
+			} elseif ($thisday == "Thursday")
+			{
+				$today = "thu";
+				$day2 = "fri";
+				$day3 = "sat";
+				$day4 = "sun";
+				$day5 = "mon";
+				$day6 = "tue";
+				$day7 = "wed";
+			} elseif ($thisday == "Friday")
+			{
+				$today = "fri";
+				$day2 = "sat";
+				$day3 = "sun";
+				$day4 = "mon";
+				$day5 = "tue";
+				$day6 = "wed";
+				$day7 = "thu";
+			} elseif ($thisday == "Saturday")
+			{
+				$today = "sat";
+				$day2 = "sun";
+				$day3 = "mon";
+				$day4 = "tue";
+				$day5 = "wed";
+				$day6 = "thu";
+				$day7 = "fri";
+			} elseif ($thisday == "Sunday")
+			{
+				$today = "sun";
+				$day2 = "mon";
+				$day3 = "tue";
+				$day4 = "wed";
+				$day5 = "thu";
+				$day6 = "fri";
+				$day7 = "sat";
+			}
 
 			// Closing the MySQL connection
 			mysqli_close($con);
@@ -170,58 +301,211 @@ $sec = "10";
 			    return $dtF->diff($dtT)->format('%ad %hh %im');
 			}
 	    ?>
-		<table width="600">
-			<tr>
-				<td align="left" width="180">Uptime: <?php echo secondsToTime($difference); ?></td>
-				<td align="center"><?php echo date("Y/m/d - H:i"); ?> </td>
-				<td align="right" width="180">&nbsp;</td>
-			</tr>
-		</table>
-		<table>
-			<tr height="170">
-				<td width="80">&nbsp;</td>
-				<td width="250" class="bigtemp"><?php echo "$largetemp<sup>$smalltemp &#8451;</sup>"; ?></td>
-				<td><img src="<?php echo $weatherimage ?>" align="right"></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td class="tdheight2">&nbsp;</td><td></td>
-			</tr>
-		</table>
+		<!-- Aligning the dahboards data and buttons in the CSS, these are the div containers for them -->
+		<div class="tempgraph"><canvas id="Temperature"></canvas></div>
+		<div class="humgraph"><canvas id="Humidity"></canvas></div>
+		<div class="pressgraph"><canvas id="Pressure"></canvas></div>
+		<div class="uptime">Uptime: <?php echo secondsToTime($difference); ?></div>
+		<div class="clock"><?php echo date("Y/m/d - H:i"); ?></div>
+		<div class="bigtemp"><?php echo "$largetemp<sup>$smalltemp &#8451;</sup>"; ?></div>
+		<div class="tempicon"><img src="<?php echo $weatherimage ?>" align="right"></div>
+		<div class="pressdata"><?php echo "$pressdata hpa"; ?></div>
+		<div class="humdata"><?php echo "$humdata %"; ?></div>
+		<div class="nightirrigation"><?php echo "~".$nirritime."m"; ?></div>
+		<div class="dayirrigation"><?php echo "~".$dirritime."m"; ?></div>
+		<div class="tapbutton"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><?php echo $tapicon ?></button></div>
+		<div class="rebootbutton"><button id="btnrboot" name="btnrboot" onClick='location.href="?rboot=1"'><img src="power.png"></img></button></div>
 		<table>
 			<tr>
-				<td width="70">&nbsp;</td><td class="wdata"><?php echo "$pressdata hpa"; ?></td>
+				<!-- This seems to be needed in order to properly show the full site in Chrome/Chromium. Otherwise it cuts the page about halfway down -->
+				<td height="1000">&nbsp;</td><td></td>
 			</tr>
 		</table>
-		<table>
-			<tr>
-				<td class="tdheight3">&nbsp;</td><td></td>
-			</tr>
-			<tr>
-				<td width="70">&nbsp;</td><td class="wdata"><?php echo "$humdata %"; ?></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td class="tdheight1">&nbsp;</td><td></td>
-			</tr>
-			<tr>
-				<td width="105">&nbsp;</td><td class="idata" width="265"><?php echo "~".$nirritime."m"; ?></td><td class="idata"><?php echo "~".$dirritime."m"; ?></td><td width="20">&nbsp;</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td height="25">&nbsp;</td><td></td>
-			</tr>
-			<tr>
-				<td width="200">&nbsp;</td><td class="idata" width="195" height="200"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><?php echo $tapicon ?></button></td><td width="190">&nbsp;</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td height="65" width="507">&nbsp;</td><td width="75"><button id="btnrboot" name="btnrboot" onClick='location.href="?rboot=1"'><img src="power.png"></img></button></td>
-			</tr>
-		</table>
+<script>
+	// This script sets the Temperature graph for showing the past 7 days area chart
+	var ct1 = document.getElementById("Temperature");
+	ct1.width = 608;
+	ct1.height = 120;
+	var myTempChart = new Chart(ct1, {
+	    type: 'line',
+	    data: {
+	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
+			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+	        datasets: [{
+	            data: [<?php echo $result28_array[0]; ?>, <?php echo $result27_array[0]; ?>, <?php echo $result26_array[0]; ?>, <?php echo $result25_array[0]; ?>, <?php echo $result24_array[0]; ?>, <?php echo $result23_array[0]; ?>, <?php echo $result22_array[0]; ?>, <?php echo $result21_array[0]; ?>, <?php echo $result20_array[0]; ?>, <?php echo $result19_array[0]; ?>, <?php echo $result18_array[0]; ?>, <?php echo $result17_array[0]; ?>, <?php echo $result16_array[0]; ?>, <?php echo $result15_array[0]; ?>, <?php echo $result14_array[0]; ?>, <?php echo $result13_array[0]; ?>, <?php echo $result12_array[0]; ?>, <?php echo $result11_array[0]; ?>, <?php echo $result10_array[0]; ?>, <?php echo $result9_array[0]; ?>, <?php echo $result8_array[0]; ?>, <?php echo $result7_array[0]; ?>, <?php echo $result6_array[0]; ?>, <?php echo $result5_array[0]; ?>, <?php echo $result4_array[0]; ?>, <?php echo $result3_array[0]; ?>, <?php echo $result2_array[0]; ?>, <?php echo $result1_array[0]; ?>],
+	            backgroundColor: [
+	                'rgba(88, 82, 57, 1)'
+	            ],
+	            borderColor: [
+	                'rgba(241,224,148,1)'
+	            ],
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	        scales: {
+				xAxes: [{
+	                ticks: {
+						fontColor: '#bebcbc',
+                    	fontSize: 12,
+                    	maxRotation: 0,
+                    	minRotation: 0
+	                },
+				    gridLines: {
+				        display:false,
+						tickMarkLength: 2
+				    }
+				}],
+				yAxes: [{
+	                ticks: {
+						// autoSkip: false,
+                    	// maxRotation: 90,
+                    	// minRotation: 90,
+	                    beginAtZero:true,
+						suggestedMin: 10,
+						suggestedMax: 35,
+						fontColor: '#bebcbc',
+                    	fontSize: 12
+	                },
+				    gridLines: {
+				        display:false
+				    }
+	            }]
+	        },
+			legend: {
+				display: false
+			        },
+         tooltips: {
+            enabled: false
+         },
+		 elements: { point: { radius: 0 } },
+		 animation: {
+		         duration: 0
+		     }
+	    }
+	});
+</script>
+<script>
+	// This script sets the Humidity graph for showing the past 7 days area chart
+	var ct2 = document.getElementById("Humidity");
+	ct2.width = 330;
+	ct2.height = 100;
+	var myHumChart = new Chart(ct2, {
+	    type: 'line',
+	    data: {
+	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
+			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+	        datasets: [{
+	            data: [<?php echo $result28_array[1]; ?>, <?php echo $result27_array[1]; ?>, <?php echo $result26_array[1]; ?>, <?php echo $result25_array[1]; ?>, <?php echo $result24_array[1]; ?>, <?php echo $result23_array[1]; ?>, <?php echo $result22_array[1]; ?>, <?php echo $result21_array[1]; ?>, <?php echo $result20_array[1]; ?>, <?php echo $result19_array[1]; ?>, <?php echo $result18_array[1]; ?>, <?php echo $result17_array[1]; ?>, <?php echo $result16_array[1]; ?>, <?php echo $result15_array[1]; ?>, <?php echo $result14_array[1]; ?>, <?php echo $result13_array[1]; ?>, <?php echo $result12_array[1]; ?>, <?php echo $result11_array[1]; ?>, <?php echo $result10_array[1]; ?>, <?php echo $result9_array[1]; ?>, <?php echo $result8_array[1]; ?>, <?php echo $result7_array[1]; ?>, <?php echo $result6_array[1]; ?>, <?php echo $result5_array[1]; ?>, <?php echo $result4_array[1]; ?>, <?php echo $result3_array[1]; ?>, <?php echo $result2_array[1]; ?>, <?php echo $result1_array[1]; ?>],
+	            backgroundColor: [
+	                'rgba(88, 82, 57, 1)'
+	            ],
+	            borderColor: [
+	                'rgba(241,224,148,1)'
+	            ],
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	        scales: {
+				xAxes: [{
+	                ticks: {
+						fontColor: '#bebcbc',
+                    	fontSize: 12,
+                    	maxRotation: 0,
+                    	minRotation: 0
+	                },
+				    gridLines: {
+				        display:false,
+						tickMarkLength: 2
+				    }
+				}],
+				yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+						suggestedMin: 20,
+						suggestedMax: 50,
+						fontColor: '#bebcbc',
+                    	fontSize: 12
+	                },
+				    gridLines: {
+				        display:false
+				    }
+	            }]
+	        },
+			legend: {
+				display: false
+			        },
+         tooltips: {
+            enabled: false
+         },
+		 elements: { point: { radius: 0 } },
+		 animation: {
+		         duration: 0
+		     }
+	    }
+	});
+</script>
+<script>
+	// This script sets the Pressure graph for showing the past 7 days area chart
+	var ct3 = document.getElementById("Pressure");
+	ct3.width = 342;
+	ct3.height = 100;
+	var myPressChart = new Chart(ct3, {
+	    type: 'line',
+	    data: {
+	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
+			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+	        datasets: [{
+	            data: [<?php echo $result28_array[2]; ?>, <?php echo $result27_array[2]; ?>, <?php echo $result26_array[2]; ?>, <?php echo $result25_array[2]; ?>, <?php echo $result24_array[2]; ?>, <?php echo $result23_array[2]; ?>, <?php echo $result22_array[2]; ?>, <?php echo $result21_array[2]; ?>, <?php echo $result20_array[2]; ?>, <?php echo $result19_array[2]; ?>, <?php echo $result18_array[2]; ?>, <?php echo $result17_array[2]; ?>, <?php echo $result16_array[2]; ?>, <?php echo $result15_array[2]; ?>, <?php echo $result14_array[2]; ?>, <?php echo $result13_array[2]; ?>, <?php echo $result12_array[2]; ?>, <?php echo $result11_array[2]; ?>, <?php echo $result10_array[2]; ?>, <?php echo $result9_array[2]; ?>, <?php echo $result8_array[2]; ?>, <?php echo $result7_array[2]; ?>, <?php echo $result6_array[2]; ?>, <?php echo $result5_array[2]; ?>, <?php echo $result4_array[2]; ?>, <?php echo $result3_array[2]; ?>, <?php echo $result2_array[2]; ?>, <?php echo $result1_array[2]; ?>],
+	            backgroundColor: [
+	                'rgba(88, 82, 57, 1)'
+	            ],
+	            borderColor: [
+	                'rgba(241,224,148,1)'
+	            ],
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	        scales: {
+				xAxes: [{
+	                ticks: {
+						fontColor: '#bebcbc',
+                    	fontSize: 12,
+                    	maxRotation: 0,
+                    	minRotation: 0
+	                },
+				    gridLines: {
+				        display:false,
+						tickMarkLength: 2
+				    }
+				}],
+				yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+						suggestedMin: 950,
+						suggestedMax: 1050,
+						fontColor: '#bebcbc',
+                    	fontSize: 12
+	                },
+				    gridLines: {
+				        display:false
+				    }
+	            }]
+	        },
+			legend: {
+				display: false
+			        },
+         tooltips: {
+            enabled: false
+         },
+		 elements: { point: { radius: 0 } },
+		 animation: {
+		         duration: 0
+		     }
+	    }
+	});
+</script>
     </body>
 </html>
