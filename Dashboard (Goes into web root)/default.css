@@ -3,6 +3,7 @@
     src: url(http://localhost/font.ttf) format("truetype");
 }
 @media screen and (min-width: 1000px) and (max-width: 1100px) and (orientation: landscape) {
+/* This is the CSS for the Raspberry Pi's 7" touchscreen dashboard */
   html {
     transform: rotate(-90deg);
     transform-origin: left top;
@@ -14,24 +15,100 @@
   	background-color: #2e2f31;
   	color: #ffffff;
   	}
-	.tdheight1 {
-      height: 150;
+	.tempgraph {
+      position: absolute; 
+	  top: 178; 
+	  left: 5;
+	  align: left;
 	}
-	.tdheight2 {
-      height: 120;
+	.humgraph {
+      position: absolute; 
+	  top: 417; 
+	  left: 282;
+	  align: left;
 	}
-	.tdheight3 {
-      height: 50;
+	.pressgraph {
+      position: absolute; 
+	  top: 310; 
+	  left: 269;
+	  align: left;
 	}
-	.tdheight4 {
-      height: 67;
-	  width: 50%;
+	.uptime {
+      position: absolute; 
+	  top: 0; 
+	  left: 10;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
 	}
-	.tdheight5 {
-      height: 15;
+	.clock {
+      position: absolute; 
+	  top: 0; 
+	  left: 235;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
+	}
+	.bigtemp {
+      position: absolute; 
+	  top: 55; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:6.5em;
+	  color: #76c83f;
+	}
+	.tempicon {
+      position: absolute; 
+	  top: 15; 
+	  left: 340;
+	}
+	.pressdata {
+      position: absolute; 
+	  top: 330; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.humdata {
+      position: absolute; 
+	  top: 440; 
+	  left: 90;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.nightirrigation {
+      position: absolute; 
+	  top: 657; 
+	  left: 118;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.dayirrigation {
+      position: absolute; 
+	  top: 657; 
+	  left: 385;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.tapbutton {
+      position: absolute; 
+	  top: 730; 
+	  left: 208;
+	}
+	.rebootbutton {
+      position: absolute; 
+	  top: 934; 
+	  left: 526;
 	}
 }
 @media screen and (min-width: 1100px) and (max-width: 5000px) and (orientation: landscape) {
+/* This is the CSS for the general desktop layout dashboard */
   html {
     width: 100vh;
     position: fixed;
@@ -44,24 +121,100 @@
     -webkit-transform: scale(0.85);
     transform: scale(0.85);
   	}
-	.tdheight1 {
-      height: 170;
+	.tempgraph {
+      position: absolute; 
+	  top: 178; 
+	  left: 5;
+	  align: left;
 	}
-	.tdheight2 {
-      height: 125;
+	.humgraph {
+      position: absolute; 
+	  top: 416; 
+	  left: 282;
+	  align: left;
 	}
-	.tdheight3 {
-      height: 55;
+	.pressgraph {
+      position: absolute; 
+	  top: 310; 
+	  left: 269;
+	  align: left;
 	}
-	.tdheight4 {
-      height: 67;
-	  width: 50%;
+	.uptime {
+      position: absolute; 
+	  top: 0; 
+	  left: 10;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
 	}
-	.tdheight5 {
-      height: 15;
+	.clock {
+      position: absolute; 
+	  top: 0; 
+	  left: 235;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
+	}
+	.bigtemp {
+      position: absolute; 
+	  top: 60; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:6.5em;
+	  color: #76c83f;
+	}
+	.tempicon {
+      position: absolute; 
+	  top: 15; 
+	  left: 340;
+	}
+	.pressdata {
+      position: absolute; 
+	  top: 335; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.humdata {
+      position: absolute; 
+	  top: 442; 
+	  left: 90;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.nightirrigation {
+      position: absolute; 
+	  top: 660; 
+	  left: 118;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.dayirrigation {
+      position: absolute; 
+	  top: 660; 
+	  left: 385;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.tapbutton {
+      position: absolute; 
+	  top: 730; 
+	  left: 208;
+	}
+	.rebootbutton {
+      position: absolute; 
+	  top: 934; 
+	  left: 526;
 	}
 }
 @media screen and (min-width: 300px) and (max-width: 1000px) and (orientation: portrait) {
+/* This is the CSS for the mobile layout dashboard */ 
   html {
     width: 100vh;
     position: fixed;
@@ -74,21 +227,96 @@
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
   	}
-	.tdheight1 {
-      height: 170;
+	.tempgraph {
+      position: absolute; 
+	  top: 178; 
+	  left: 5;
+	  align: left;
 	}
-	.tdheight2 {
-      height: 125;
+	.humgraph {
+      position: absolute; 
+	  top: 416; 
+	  left: 282;
+	  align: left;
 	}
-	.tdheight3 {
-      height: 55;
+	.pressgraph {
+      position: absolute; 
+	  top: 310; 
+	  left: 269;
+	  align: left;
 	}
-	.tdheight4 {
-      height: 67;
-	  width: 50%;
+	.uptime {
+      position: absolute; 
+	  top: 0; 
+	  left: 10;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
 	}
-	.tdheight5 {
-      height: 15;
+	.clock {
+      position: absolute; 
+	  top: 0; 
+	  left: 235;
+	  align: left;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:1em;
+	  color:#bebcbc;
+	}
+	.bigtemp {
+      position: absolute; 
+	  top: 60; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:6.5em;
+	  color: #76c83f;
+	}
+	.tempicon {
+      position: absolute; 
+	  top: 15; 
+	  left: 340;
+	}
+	.pressdata {
+      position: absolute; 
+	  top: 335; 
+	  left: 85;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.humdata {
+      position: absolute; 
+	  top: 445; 
+	  left: 90;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2.5em;
+	  color: #bebcbc;
+	}
+	.nightirrigation {
+      position: absolute; 
+	  top: 660; 
+	  left: 118;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.dayirrigation {
+      position: absolute; 
+	  top: 660; 
+	  left: 385;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:2em;
+	  color: #bebcbc;
+	}
+	.tapbutton {
+      position: absolute; 
+	  top: 730; 
+	  left: 208;
+	}
+	.rebootbutton {
+      position: absolute; 
+	  top: 934; 
+	  left: 526;
 	}
 }
 .main {
@@ -109,31 +337,6 @@ table {
 }
 sup {
   font-size:0.5em;
-}
-.bigtemp {
-  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size:7.5em;
-  color: #76c83f;
-}
-.wdata {
-  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size:3.4em;
-  color: #bebcbc;
-}
-.idata {
-  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size:2.6em;
-  color: #bebcbc;
-}
-div.absolute {
-  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size:7.5em;
-  color: #76c83f;
-  position: absolute;
-  top: 80px;
-  right: 350;
-  width: 200px;
-  height: 80px;
 }
 button {
     background-color: Transparent;
