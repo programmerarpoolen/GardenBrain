@@ -129,68 +129,37 @@ $sec = "10";
 			$thisday = date('l');
 			if ($thisday == "Monday")
 			{
-				$today = "mon";
-				$day2 = "tue";
-				$day3 = "wed";
-				$day4 = "thu";
-				$day5 = "fri";
-				$day6 = "sat";
-				$day7 = "sun";
+				$weekdaysBig = "       tue       |        wed       |        thu       |        fri       |        sat       |        sun       |       mon       ";
+				$weekdaysSmall = "   tu   |    we   |    th   |    fr   |    sa   |    su   |    mo   ";
 			} elseif ($thisday == "Tuesday")
 			{
-				$today = "tue";
-				$day2 = "wed";
-				$day3 = "thu";
-				$day4 = "fri";
-				$day5 = "sat";
-				$day6 = "sun";
-				$day7 = "mon";
+				$weekdaysBig = "       wed       |        thu       |        fri       |        sat       |        sun       |        mon       |       tue       ";
+				$weekdaysSmall = "   we   |    th   |    fr   |    sa   |    su   |    mo   |   tu   ";
 			} elseif ($thisday == "Wednesday")
 			{
-				$today = "wed";
-				$day2 = "thu";
-				$day3 = "fri";
-				$day4 = "sat";
-				$day5 = "sun";
-				$day6 = "mon";
-				$day7 = "tue";
+				$weekdaysBig = "       thu       |        fri       |        sat       |        sun       |        mon       |        tue       |       wed       ";
+				$weekdaysSmall = "   th   |    fr   |    sa   |    su   |    mo   |    tu   |   we   ";
 			} elseif ($thisday == "Thursday")
 			{
-				$today = "thu";
-				$day2 = "fri";
-				$day3 = "sat";
-				$day4 = "sun";
-				$day5 = "mon";
-				$day6 = "tue";
-				$day7 = "wed";
+				$weekdaysBig = "       fri       |        sat       |        sun       |        mon       |        tue       |        wed       |       thu       ";
+				$weekdaysSmall = "   fr   |    sa   |    su   |    mo   |    tu   |    we   |   th   ";
 			} elseif ($thisday == "Friday")
 			{
-				$today = "fri";
-				$day2 = "sat";
-				$day3 = "sun";
-				$day4 = "mon";
-				$day5 = "tue";
-				$day6 = "wed";
-				$day7 = "thu";
+				$weekdaysBig = "       sat       |        sun       |        mon       |        tue       |        wed       |        thu       |       fri       ";
+				$weekdaysSmall = "   sa   |    su   |    mo   |    tu   |    we   |    th   |   fr   ";
 			} elseif ($thisday == "Saturday")
 			{
-				$today = "sat";
-				$day2 = "sun";
-				$day3 = "mon";
-				$day4 = "tue";
-				$day5 = "wed";
-				$day6 = "thu";
-				$day7 = "fri";
+				$weekdaysBig = "       sun       |        mon       |        tue       |        wed       |        thu       |        fri       |       sat       ";
+				$weekdaysSmall = "   su   |    mo   |    tu   |    we   |    th   |    fr   |   sa   ";
 			} elseif ($thisday == "Sunday")
 			{
-				$today = "sun";
-				$day2 = "mon";
-				$day3 = "tue";
-				$day4 = "wed";
-				$day5 = "thu";
-				$day6 = "fri";
-				$day7 = "sat";
+				$weekdaysBig = "       mon       |        tue       |        wed       |        thu       |        fri       |        sat       |       sun       ";
+				$weekdaysSmall = "   mo   |    tu   |    we   |    th   |    fr   |    sa   |   su   ";
 			}
+			
+			// Maintaining whitespaces..
+			$weekdaysBig = str_replace(' ', '&nbsp;', $weekdaysBig);
+			$weekdaysSmall = str_replace(' ', '&nbsp;', $weekdaysSmall);
 
 			// Closing the MySQL connection
 			mysqli_close($con);
@@ -302,19 +271,27 @@ $sec = "10";
 			}
 	    ?>
 		<!-- Aligning the dahboards data and buttons in the CSS, these are the div containers for them -->
-		<div class="tempgraph"><canvas id="Temperature"></canvas></div>
-		<div class="humgraph"><canvas id="Humidity"></canvas></div>
-		<div class="pressgraph"><canvas id="Pressure"></canvas></div>
-		<div class="uptime">Uptime: <?php echo secondsToTime($difference); ?></div>
-		<div class="clock"><?php echo date("Y/m/d - H:i"); ?></div>
-		<div class="bigtemp"><?php echo "$largetemp<sup>$smalltemp &#8451;</sup>"; ?></div>
-		<div class="tempicon"><img src="<?php echo $weatherimage ?>" align="right"></div>
-		<div class="pressdata"><?php echo "$pressdata hpa"; ?></div>
-		<div class="humdata"><?php echo "$humdata %"; ?></div>
-		<div class="nightirrigation"><?php echo "~".$nirritime."m"; ?></div>
-		<div class="dayirrigation"><?php echo "~".$dirritime."m"; ?></div>
-		<div class="tapbutton"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><?php echo $tapicon ?></button></div>
-		<div class="rebootbutton"><button id="btnrboot" name="btnrboot" onClick='location.href="?rboot=1"'><img src="power.png"></img></button></div>
+		<div id="TemperatureGraph" class="tempgraph"><canvas id="Temperature"></canvas></div>
+		<div id="HumidityGraph" class="humgraph"><canvas id="Humidity"></canvas></div>
+		<div id="PressureGraph" class="pressgraph"><canvas id="Pressure"></canvas></div>
+		<div id="UptimeCounter" class="uptime">Uptime: <?php echo secondsToTime($difference); ?></div>
+		<div id="TimeClock" class="clock"><?php echo date("Y/m/d - H:i"); ?></div>
+		<div id="CurrentTemperature" class="bigtemp"><?php echo "$largetemp<sup>$smalltemp &#8451;</sup>"; ?></div>
+		<div id="CurrentWeather" class="tempicon"><img src="<?php echo $weatherimage ?>" align="right"></div>
+		<div id="CurrentPressure" class="pressdata"><?php echo "$pressdata hpa"; ?></div>
+		<div id="CurrentHumidity" class="humdata"><?php echo "$humdata %"; ?></div>
+		<div id="NightIrrigation" class="nightirrigation"><?php echo "~".$nirritime."m"; ?></div>
+		<div id="DayIrrigation" class="dayirrigation"><?php echo "~".$dirritime."m"; ?></div>
+		<div id="TapButton" class="tapbutton"><button id="btntap" name="btntap"  onClick='location.href="?tap=1"'><?php echo $tapicon ?></button></div>
+		<div id="RebootButton" class="rebootbutton"><button id="btnrboot" name="btnrboot" onClick='location.href="?rboot=1"'><img src="power.png"></img></button></div>
+		<div id="TemperatureDays" class="weekdaystemp"><?php echo $weekdaysBig; ?></div>
+		<div id="PressureDays" class="weekdayspress"><?php echo $weekdaysSmall; ?></div>
+		<div id="HumidityDays" class="weekdayshum"><?php echo $weekdaysSmall; ?></div>
+		<div id="Logo" class="logoicon"><img src="logo.png"></img></div>
+		<div id="PressureIcon" class="pressureicon"><img src="pressureicon.png"></img></div>
+		<div id="HumidityIcon" class="humidityicon"><img src="humidityicon.png"></img></div>
+		<div id="NightImage" class="nightimage"><img src="night.png"></img></div>
+		<div id="DayImage" class="dayimage"><img src="day.png"></img></div>
 		<table>
 			<tr>
 				<!-- This seems to be needed in order to properly show the full site in Chrome/Chromium. Otherwise it cuts the page about halfway down -->
@@ -329,7 +306,6 @@ $sec = "10";
 	var myTempChart = new Chart(ct1, {
 	    type: 'line',
 	    data: {
-	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
 			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 	        datasets: [{
 	            data: [<?php echo $result28_array[0]; ?>, <?php echo $result27_array[0]; ?>, <?php echo $result26_array[0]; ?>, <?php echo $result25_array[0]; ?>, <?php echo $result24_array[0]; ?>, <?php echo $result23_array[0]; ?>, <?php echo $result22_array[0]; ?>, <?php echo $result21_array[0]; ?>, <?php echo $result20_array[0]; ?>, <?php echo $result19_array[0]; ?>, <?php echo $result18_array[0]; ?>, <?php echo $result17_array[0]; ?>, <?php echo $result16_array[0]; ?>, <?php echo $result15_array[0]; ?>, <?php echo $result14_array[0]; ?>, <?php echo $result13_array[0]; ?>, <?php echo $result12_array[0]; ?>, <?php echo $result11_array[0]; ?>, <?php echo $result10_array[0]; ?>, <?php echo $result9_array[0]; ?>, <?php echo $result8_array[0]; ?>, <?php echo $result7_array[0]; ?>, <?php echo $result6_array[0]; ?>, <?php echo $result5_array[0]; ?>, <?php echo $result4_array[0]; ?>, <?php echo $result3_array[0]; ?>, <?php echo $result2_array[0]; ?>, <?php echo $result1_array[0]; ?>],
@@ -393,7 +369,6 @@ $sec = "10";
 	var myHumChart = new Chart(ct2, {
 	    type: 'line',
 	    data: {
-	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
 			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 	        datasets: [{
 	            data: [<?php echo $result28_array[1]; ?>, <?php echo $result27_array[1]; ?>, <?php echo $result26_array[1]; ?>, <?php echo $result25_array[1]; ?>, <?php echo $result24_array[1]; ?>, <?php echo $result23_array[1]; ?>, <?php echo $result22_array[1]; ?>, <?php echo $result21_array[1]; ?>, <?php echo $result20_array[1]; ?>, <?php echo $result19_array[1]; ?>, <?php echo $result18_array[1]; ?>, <?php echo $result17_array[1]; ?>, <?php echo $result16_array[1]; ?>, <?php echo $result15_array[1]; ?>, <?php echo $result14_array[1]; ?>, <?php echo $result13_array[1]; ?>, <?php echo $result12_array[1]; ?>, <?php echo $result11_array[1]; ?>, <?php echo $result10_array[1]; ?>, <?php echo $result9_array[1]; ?>, <?php echo $result8_array[1]; ?>, <?php echo $result7_array[1]; ?>, <?php echo $result6_array[1]; ?>, <?php echo $result5_array[1]; ?>, <?php echo $result4_array[1]; ?>, <?php echo $result3_array[1]; ?>, <?php echo $result2_array[1]; ?>, <?php echo $result1_array[1]; ?>],
@@ -454,7 +429,6 @@ $sec = "10";
 	var myPressChart = new Chart(ct3, {
 	    type: 'line',
 	    data: {
-	        /* labels: ["", "", "<?php echo $day7; ?>", "", "", "", "<?php echo $day6; ?>", "",  "", "", "<?php echo $day5; ?>", "", "", "", "<?php echo $day4; ?>", "", "", "", "<?php echo $day3; ?>", "", "", "", "<?php echo $day2; ?>", "", "", "", "<?php echo $today; ?>", ""], */
 			labels: ["", "", "", "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 	        datasets: [{
 	            data: [<?php echo $result28_array[2]; ?>, <?php echo $result27_array[2]; ?>, <?php echo $result26_array[2]; ?>, <?php echo $result25_array[2]; ?>, <?php echo $result24_array[2]; ?>, <?php echo $result23_array[2]; ?>, <?php echo $result22_array[2]; ?>, <?php echo $result21_array[2]; ?>, <?php echo $result20_array[2]; ?>, <?php echo $result19_array[2]; ?>, <?php echo $result18_array[2]; ?>, <?php echo $result17_array[2]; ?>, <?php echo $result16_array[2]; ?>, <?php echo $result15_array[2]; ?>, <?php echo $result14_array[2]; ?>, <?php echo $result13_array[2]; ?>, <?php echo $result12_array[2]; ?>, <?php echo $result11_array[2]; ?>, <?php echo $result10_array[2]; ?>, <?php echo $result9_array[2]; ?>, <?php echo $result8_array[2]; ?>, <?php echo $result7_array[2]; ?>, <?php echo $result6_array[2]; ?>, <?php echo $result5_array[2]; ?>, <?php echo $result4_array[2]; ?>, <?php echo $result3_array[2]; ?>, <?php echo $result2_array[2]; ?>, <?php echo $result1_array[2]; ?>],
