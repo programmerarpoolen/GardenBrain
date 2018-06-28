@@ -8,6 +8,10 @@ $sec = "10";
 		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 		<link href="default.css" rel="stylesheet" type="text/css">
 		<script src="Chart.js"></script>
+		<meta 
+		     name='viewport' 
+		     content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
+		/>
     </head>
     <body>
 	    <?php
