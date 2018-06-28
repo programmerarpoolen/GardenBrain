@@ -271,7 +271,16 @@ $sec = "10";
 			function secondsToTime($seconds) {
 			    $dtF = new \DateTime('@0');
 			    $dtT = new \DateTime("@$seconds");
-			    return $dtF->diff($dtT)->format('%ad %hh %im');
+				if ($seconds < 3600)
+					{
+						return $dtF->diff($dtT)->format('%im');
+					}	elseif ($seconds < 86400)
+					{
+						return $dtF->diff($dtT)->format('%hh %im');
+					} 	else
+					{
+						return $dtF->diff($dtT)->format('%ad %hh %im');
+					}
 			}
 	    ?>
 		<!-- Aligning the dahboards data and buttons in the CSS, these are the div containers for them -->
