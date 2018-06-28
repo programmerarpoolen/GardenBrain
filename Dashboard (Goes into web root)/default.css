@@ -328,14 +328,14 @@
   html {
     width: 100vh;
     position: fixed;
-    top: 450;
-    left: 50%;
+    top: -170;
+    left: -135;
   	background-color: #2e2f31;
   	color: #ffffff;
 	margin-left: 0;
-    -moz-transform: scale(1.5);
-    -webkit-transform: scale(1.5);
-    transform: scale(1.5);
+    -moz-transform: scale(0.65);
+    -webkit-transform: scale(0.65);
+    transform: scale(0.65);
   	}
 	.tempgraph {
       position: absolute; 
@@ -425,7 +425,7 @@
 	}
 	.rebootbutton {
       position: absolute; 
-	  top: 934; 
+	  top: 1034; 
 	  left: 526;
 	}
 	.weekdaystemp {
@@ -460,7 +460,7 @@
 	}
 	.logoicon {
       position: absolute; 
-	  top: 939; 
+	  top: 1039; 
 	  left: 12;
 	}
 	.pressureicon {
