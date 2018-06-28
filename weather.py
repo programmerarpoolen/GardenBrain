@@ -84,6 +84,15 @@ try:
 
 	    #Clearing any data from the SenseHat
         sense.clear()
+        
+        #If fetching current pressure and humidity fails, then use previous entry in database (to remove incorrect zeros in the data)
+        if pressure == 0:
+            pressure = dbfetch("PRESSURE","weather_date")
+            dolog("Failed to get current pressure, instead using the pressure from previous entry in database")
+            
+        if humidity == 0:
+            humidity = dbfetch("HUMIDITY","weather_date")
+            dolog("Failed to get current humidity, instead using the humidity from previous entry in database")
 
 	    #Connecting to database again and writing the data into the weather_data table
         #db_wd_insert(time.strftime("%Y-%m-%d %H:%M"),str(temp),str(humidity),str(pressure))
