@@ -106,6 +106,61 @@
 	  top: 934; 
 	  left: 526;
 	}
+	.weekdaystemp {
+      position: absolute; 
+	  top: 276; 
+	  left: 40;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 590;
+	}
+	.weekdayspress {
+      position: absolute; 
+	  top: 387; 
+	  left: 315;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 322;
+	}
+	.weekdayshum {
+      position: absolute; 
+	  top: 495; 
+	  left: 314;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 310;
+	}
+	.logoicon {
+      position: absolute; 
+	  top: 939; 
+	  left: 12;
+	}
+	.pressureicon {
+      position: absolute; 
+	  top: 336; 
+	  left: 32;
+	}
+	.humidityicon {
+      position: absolute; 
+	  top: 437; 
+	  left: 31;
+	}
+	.nightimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 75;
+	}
+	.dayimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 375;
+	}
 }
 @media screen and (min-width: 1100px) and (max-width: 5000px) and (orientation: landscape) {
 /* This is the CSS for the general desktop layout dashboard */
@@ -211,6 +266,61 @@
       position: absolute; 
 	  top: 934; 
 	  left: 526;
+	}
+	.weekdaystemp {
+      position: absolute; 
+	  top: 278; 
+	  left: 60;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 590;
+	}
+	.weekdayspress {
+      position: absolute; 
+	  top: 390; 
+	  left: 325;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 322;
+	}
+	.weekdayshum {
+      position: absolute; 
+	  top: 496; 
+	  left: 324;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 310;
+	}
+	.logoicon {
+      position: absolute; 
+	  top: 939; 
+	  left: 12;
+	}
+	.pressureicon {
+      position: absolute; 
+	  top: 336; 
+	  left: 32;
+	}
+	.humidityicon {
+      position: absolute; 
+	  top: 437; 
+	  left: 31;
+	}
+	.nightimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 75;
+	}
+	.dayimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 375;
 	}
 }
 @media screen and (min-width: 300px) and (max-width: 1000px) and (orientation: portrait) {
@@ -318,6 +428,61 @@
 	  top: 934; 
 	  left: 526;
 	}
+	.weekdaystemp {
+      position: absolute; 
+	  top: 278; 
+	  left: 75;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 590;
+	}
+	.weekdayspress {
+      position: absolute; 
+	  top: 391; 
+	  left: 330;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 322;
+	}
+	.weekdayshum {
+      position: absolute; 
+	  top: 496; 
+	  left: 329;
+	  font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
+	  font-size:0.8em;
+	  color: #bebcbc;
+	  text-align: justify;
+	  width: 310;
+	}
+	.logoicon {
+      position: absolute; 
+	  top: 939; 
+	  left: 12;
+	}
+	.pressureicon {
+      position: absolute; 
+	  top: 336; 
+	  left: 32;
+	}
+	.humidityicon {
+      position: absolute; 
+	  top: 437; 
+	  left: 31;
+	}
+	.nightimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 75;
+	}
+	.dayimage {
+      position: absolute; 
+	  top: 563; 
+	  left: 375;
+	}
 }
 .main {
   font-family: GardenBrain, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -325,8 +490,6 @@
   color:#ffffff;
 }
 body {
-  background-image: url("background.jpg");
-  background-repeat: no-repeat;
   background-color: #2e2f31;
   color: #ffffff;
 }
