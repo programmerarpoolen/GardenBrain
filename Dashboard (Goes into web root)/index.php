@@ -361,8 +361,8 @@ $sec = "10";
 						// autoSkip: false,
                     	// maxRotation: 90,
                     	// minRotation: 90,
-	                    beginAtZero:true,
-						suggestedMin: 10,
+	                    beginAtZero:false,
+						suggestedMin: 15,
 						suggestedMax: 35,
 						fontColor: '#bebcbc',
                     	fontSize: 12
@@ -422,9 +422,9 @@ $sec = "10";
 				}],
 				yAxes: [{
 	                ticks: {
-	                    beginAtZero:true,
-						suggestedMin: 20,
-						suggestedMax: 50,
+	                    beginAtZero:false,
+						suggestedMin: 25,
+						suggestedMax: 45,
 						fontColor: '#bebcbc',
                     	fontSize: 12
 	                },
@@ -483,7 +483,7 @@ $sec = "10";
 				}],
 				yAxes: [{
 	                ticks: {
-	                    beginAtZero:true,
+	                    beginAtZero:false,
 						suggestedMin: 950,
 						suggestedMax: 1050,
 						fontColor: '#bebcbc',
