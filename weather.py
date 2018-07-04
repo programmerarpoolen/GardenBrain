@@ -6,7 +6,7 @@ import time
 import sys
 import MySQLdb
 import subprocess
-from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert
+from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch
 
 #This is a variable with option to reset everything on startup
 resetall = 0
