@@ -8,6 +8,11 @@ import MySQLdb
 import subprocess
 from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch
 
+#Declaring variables for processes checking
+main_proc = None
+analyzer_proc = None
+scheduled_proc = None
+
 #This is a variable with option to reset everything on startup
 resetall = 0
 
@@ -21,27 +26,37 @@ if resetall == 1:
 
 #Running the Main script which analyzes the data and sets irrigation timer accordingly
 try:
-    p = subprocess.Popen(['/home/pi/GardenBrain/main.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if main_proc is not None and main_proc.poll() is None:
+         print('process is already running')
+    else:
+        main_proc = subprocess.Popen(['/home/pi/GardenBrain/main.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        dolog("Starting main GardenBrain script succeeded in weather.py")
+        
     time.sleep(1)
-    dolog("Starting main GardenBrain script succeeded in weather.py")
     
 except:
     dolog("Starting main GardenBrain script failed in weather.py")
 
 #Startng analyzer script in the background which updates the weather_settings table with accurate irrigation times
 try:
-    p = subprocess.Popen(['/home/pi/GardenBrain/analyzer.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if analyzer_proc is not None and analyzer_proc.poll() is None:
+         print('process is already running')
+    else:
+        analyzer_proc = subprocess.Popen(['/home/pi/GardenBrain/analyzer.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        dolog("Starting analyzer script succeeded in weather.py")
     time.sleep(1)
-    dolog("Starting analyzer script succeeded in weather.py")
     
 except:
     dolog("Starting analyzer script failed in weather.py")
 
 #Startng scheduled tasks script in the background which wait for database values to start irrigation or reboot the system
 try:
-    p = subprocess.Popen(['/home/pi/GardenBrain/scheduled.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if scheduled_proc is not None and scheduled_proc.poll() is None:
+         print('process is already running')
+    else:
+        scheduled_proc = subprocess.Popen(['/home/pi/GardenBrain/scheduled.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        dolog("Starting scheduled tasks script succeeded in weather.py")
     time.sleep(1)
-    dolog("Starting scheduled tasks script succeeded in weather.py")
     
 except:
     dolog("Starting scheduled tasks script failed in weather.py")
