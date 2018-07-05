@@ -12,6 +12,9 @@ sysstart()
 #Sleeping for a second
 t.sleep(1)
 
+#Declaring variable relay_proc
+relay_proc = None
+
 try:
 
     #Time checking loop that starts irrigation at set times
@@ -27,12 +30,17 @@ try:
             if irrigated == 0:
                 print("Time for some irrigation!")
                 try:
-                    p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    # Old part that was buggy
+                    # p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    
+                    if relay_proc is not None and relay_proc.poll() is None:
+                         print('process is already running')
+                    else:
+                        relay_proc = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        dolog("Successfully started the relay.py script in main.py")
         
                     #Sleeping for a second
                     t.sleep(1)
-                    
-                    # dolog("Successfully started the relay.py script in main.py") # Seems this is logged a hundred times plus instead of only once...
     
                 except:
                     print("Starting night time irrigation script failed")
@@ -44,12 +52,17 @@ try:
             if irrigated == 0:
                 print("Perhaps some extra irrigation?")
                 try:
-                    p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    # Old part that was buggy
+                    # p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    
+                    if relay_proc is not None and relay_proc.poll() is None:
+                         print('process is already running')
+                    else:
+                        relay_proc = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        dolog("Successfully started the relay.py script in main.py")
         
                     #Sleeping for a second
                     t.sleep(1)
-        
-                    # dolog("Successfully started the relay.py script in main.py") # Seems this is logged a hundred times plus instead of only once...
     
                 except:
                     print("Starting day time irrigation script failed")
@@ -62,7 +75,7 @@ try:
             #Sleeping for a second
             t.sleep(1)
         
-            #dolog("Resetting data for NIGHT_IRRIGATED to 0 in database in main.py")
+            dolog("Resetting data for NIGHT_IRRIGATED to 0 in database in main.py")
     
         elif now_time >= time(17,00) and now_time < time(18,00):
             #Making sure irrigation setting is restored in db after irrigation timeframe
@@ -71,7 +84,7 @@ try:
             #Sleeping for a second
             t.sleep(1)
         
-            #dolog("Resetting data for DAY_IRRIGATED to 0 in database in main.py")
+            dolog("Resetting data for DAY_IRRIGATED to 0 in database in main.py")
     
         else:
             print("No irrigation at this point")
@@ -83,8 +96,8 @@ try:
             #Cleaning up any 1+ year old weather data
             weather_cleanup()
         
-            #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
-            t.sleep(900)
+        #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
+        t.sleep(900)
 
 except KeyboardInterrupt:
     pass
