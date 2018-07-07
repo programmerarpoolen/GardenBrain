@@ -23,11 +23,12 @@ try:
         #Checking to see what time it is and starts the subprocess if it should
         now = datetime.now()
         now_time = now.time()
+        nirrigated = dbfetch('NIGHT_IRRIGATED','weather_settings')
+        dirrigated = dbfetch('DAY_IRRIGATED','weather_settings')
     
         if now_time >= time(01,00) and now_time < time(02,00):
             #Start subprocess if irrigation hasn't been done yet
-            irrigated = dbfetch('NIGHT_IRRIGATED','weather_settings')
-            if irrigated == 0:
+            if nirrigated == 0:
                 print("Time for some irrigation!")
                 try:
                     # Old part that was buggy
@@ -48,7 +49,6 @@ try:
     
         elif now_time >= time(16,00) and now_time < time(17,00):
             #Start subprocess if irrigation hasn't been done yet
-            irrigated = dbfetch('DAY_IRRIGATED','weather_settings')
             if irrigated == 0:
                 print("Perhaps some extra irrigation?")
                 try:
@@ -68,7 +68,7 @@ try:
                     print("Starting day time irrigation script failed")
                     dolog("Starting the relay.py script failed in main.py")
     
-        elif now_time >= time(02,00) and now_time < time(03,00):
+        elif now_time >= time(02,00) and now_time < time(03,00) and nirrigated == 1:
             #Making sure irrigation setting is restored in db after irrigation timeframe
             dbupdate('NIGHT_IRRIGATED','weather_settings','0')
         
@@ -77,7 +77,7 @@ try:
         
             dolog("Resetting data for NIGHT_IRRIGATED to 0 in database in main.py")
     
-        elif now_time >= time(17,00) and now_time < time(18,00):
+        elif now_time >= time(17,00) and now_time < time(18,00) and dirrigated == 1:
             #Making sure irrigation setting is restored in db after irrigation timeframe
             dbupdate('DAY_IRRIGATED','weather_settings','0')
         
