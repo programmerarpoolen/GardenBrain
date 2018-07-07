@@ -25,17 +25,20 @@ else:
     #Setting delay to a default 60 seconds if the script is run outside of the set timeframes
     delay = 60
 
-#Starting the delay
-relay_manual('on')
-
-#Sleeping for a moment
-t.sleep(delay)
-
-#Stopping the relay
-relay_manual('off')
+#If delay variable is not 0
+if delay != 0:
     
-# Running the actual relay function that starts and stops the relay with a set delay inbetween
-# relay_delay(delay)
+    #Starting the delay
+    relay_manual('on')
+
+    #Sleeping for a moment
+    t.sleep(delay)
+
+    #Stopping the relay
+    relay_manual('off')
+    
+    # Running the actual relay function that starts and stops the relay with a set delay inbetween
+    # relay_delay(delay)
     
 #Updating the table with new information about irrigation being done    
 if now_time >= time(01,00) and now_time <= time(02,00):
