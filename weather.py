@@ -7,11 +7,15 @@ import sys
 import MySQLdb
 import subprocess
 from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch
+import json
 
 #Declaring variables for processes checking
 main_proc = None
 analyzer_proc = None
 scheduled_proc = None
+
+#Loading the JSON config file
+config = json.loads(open('/var/www/html/config.json').read())
 
 #This is a variable with option to reset everything on startup
 resetall = 0
@@ -30,12 +34,12 @@ try:
          print('process is already running')
     else:
         main_proc = subprocess.Popen(['/home/pi/GardenBrain/main.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        dolog("Starting main GardenBrain script succeeded in weather.py")
+        dolog("Weather.py - Starting main GardenBrain script succeeded")
         
     time.sleep(1)
     
 except:
-    dolog("Starting main GardenBrain script failed in weather.py")
+    dolog("Weather.py - Starting main GardenBrain script failed")
 
 #Startng analyzer script in the background which updates the weather_settings table with accurate irrigation times
 try:
@@ -43,11 +47,11 @@ try:
          print('process is already running')
     else:
         analyzer_proc = subprocess.Popen(['/home/pi/GardenBrain/analyzer.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        dolog("Starting analyzer script succeeded in weather.py")
+        dolog("Weather.py - Starting analyzer script succeeded")
     time.sleep(1)
     
 except:
-    dolog("Starting analyzer script failed in weather.py")
+    dolog("Weather.py - Starting analyzer script failed")
 
 #Startng scheduled tasks script in the background which wait for database values to start irrigation or reboot the system
 try:
@@ -55,11 +59,11 @@ try:
          print('process is already running')
     else:
         scheduled_proc = subprocess.Popen(['/home/pi/GardenBrain/scheduled.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        dolog("Starting scheduled tasks script succeeded in weather.py")
+        dolog("Weather.py - Starting scheduled tasks script succeeded")
     time.sleep(1)
     
 except:
-    dolog("Starting scheduled tasks script failed in weather.py")
+    dolog("Weather.py - Starting scheduled tasks script failed")
 
 #Clearing any data on the SenseHat
 sense = SenseHat()
@@ -103,15 +107,15 @@ try:
         #If fetching current pressure and humidity fails, then use previous entry in database (to remove incorrect zeros in the data)
         if pressure == 0:
             pressure = dbfetch("PRESSURE","weather_date")
-            dolog("Failed to get current pressure, instead using the pressure from previous entry in database")
+            dolog("Weather.py - Failed to get current pressure, instead using the pressure from previous entry in database")
             
         if humidity == 0:
             humidity = dbfetch("HUMIDITY","weather_date")
-            dolog("Failed to get current humidity, instead using the humidity from previous entry in database")
+            dolog("Weather.py - Failed to get current humidity, instead using the humidity from previous entry in database")
 
 	    #Connecting to database again and writing the data into the weather_data table
         #db_wd_insert(time.strftime("%Y-%m-%d %H:%M"),str(temp),str(humidity),str(pressure))
-        db = MySQLdb.connect("localhost”,”user”,”pass”,”weather" )
+        db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
         cursor = db.cursor()
         
         try:
@@ -121,7 +125,7 @@ try:
             db.rollback()
             
         db.close()
-        dolog("Written weather data to database in weather.py")
+        dolog("Weather.py - Written weather data to database")
 
 	    #Waiting for a set number of seconds before checking data and writing to database again
         time.sleep(299)
