@@ -1,6 +1,10 @@
 <?php
 $page = $_SERVER['PHP_SELF'];
 $sec = "60";
+
+// Loading Configuration file data
+$loadconfig = file_get_contents("config.json");
+$config = json_decode($loadconfig);
 ?>
 <html>
     <head>
@@ -21,7 +25,7 @@ $sec = "60";
 			// ini_set('display_startup_errors', 1);
 			
 			// Connecting to MySQL
-			$con=mysqli_connect("localhost","user","pass","weather");
+			$con=mysqli_connect($config->database->host,$config->database->user,$config->database->password,$config->database->dbname);
 			// Checking the connection
 			if (mysqli_connect_errno())
 			{
@@ -175,7 +179,7 @@ $sec = "60";
 			$humdata = round($data_array[2]);
 			
 			// These make sure we show irrigation time in minutes and not in seconds as we have in the database
-			if ($irrigation_array[0] > 0)
+			if ($irrigation_array[0] > 0 and date("H") > 1)
 				{
 					if ($npassedtime > 0)
 						{
@@ -194,7 +198,7 @@ $sec = "60";
 				}	else {
 					$nirritime = "0";
 				}
-			if ($irrigation_array[1] > 0)
+			if ($irrigation_array[1] > 0 and date("H") > 16)
 				{
 					$dirritime = substr($irrigation_array[1]/60,0,3);
 				}	else {
@@ -232,7 +236,7 @@ $sec = "60";
 			function irrigate_now($irrigationstart)
 			{
 				// Connecting to MySQL
-				$con=mysqli_connect("localhost","user","pass","weather");
+				$con=mysqli_connect($config->database->host,$config->database->user,$config->database->password,$config->database->dbname);
 				// Checking the connection
 				mysqli_connect_errno();
 					
@@ -255,7 +259,7 @@ $sec = "60";
 			function runreboot()
 			{
 				// Connecting to MySQL
-				$con=mysqli_connect("localhost","user","pass","weather");
+				$con=mysqli_connect($config->database->host,$config->database->user,$config->database->password,$config->database->dbname);
 				// Checking the connection
 				mysqli_connect_errno();
 					
@@ -277,7 +281,7 @@ $sec = "60";
 					}	elseif ($seconds < 86400)
 					{
 						return $dtF->diff($dtT)->format('%hh %im');
-					} 	else
+					} else
 					{
 						return $dtF->diff($dtT)->format('%ad %hh %im');
 					}
@@ -351,7 +355,7 @@ $sec = "60";
                     	// maxRotation: 90,
                     	// minRotation: 90,
 	                    beginAtZero:false,
-						suggestedMin: 15,
+						suggestedMin: 20,
 						suggestedMax: 35,
 						fontColor: '#bebcbc',
                     	fontSize: 12
@@ -411,8 +415,8 @@ $sec = "60";
 				yAxes: [{
 	                ticks: {
 	                    beginAtZero:false,
-						suggestedMin: 25,
-						suggestedMax: 45,
+						suggestedMin: 30,
+						suggestedMax: 40,
 						fontColor: '#bebcbc',
                     	fontSize: 12
 	                },
@@ -471,8 +475,8 @@ $sec = "60";
 				yAxes: [{
 	                ticks: {
 	                    beginAtZero:false,
-						suggestedMin: 950,
-						suggestedMax: 1050,
+						suggestedMin: 990,
+						suggestedMax: 1015,
 						fontColor: '#bebcbc',
                     	fontSize: 12
 	                },
