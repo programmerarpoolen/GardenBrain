@@ -38,14 +38,14 @@ try:
                          print('process is already running')
                     else:
                         relay_proc = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                        dolog("Successfully started the relay.py script in main.py")
+                        dolog("Main.py - Successfully started the relay.py script")
         
                     #Sleeping for a second
                     t.sleep(1)
     
                 except:
                     print("Starting night time irrigation script failed")
-                    dolog("Starting the relay.py script failed in main.py")
+                    dolog("Main.py - Starting the relay.py script failed")
     
         elif now_time >= time(16,00) and now_time < time(17,00):
             #Start subprocess if irrigation hasn't been done yet
@@ -59,14 +59,14 @@ try:
                          print('process is already running')
                     else:
                         relay_proc = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                        dolog("Successfully started the relay.py script in main.py")
+                        dolog("Main.py - Successfully started the relay.py script")
         
                     #Sleeping for a second
                     t.sleep(1)
     
                 except:
                     print("Starting day time irrigation script failed")
-                    dolog("Starting the relay.py script failed in main.py")
+                    dolog("Main.py - Starting the relay.py script failed")
     
         elif now_time >= time(02,00) and now_time < time(03,00) and nirrigated == 1:
             #Making sure irrigation setting is restored in db after irrigation timeframe
@@ -75,7 +75,7 @@ try:
             #Sleeping for a second
             t.sleep(1)
         
-            dolog("Resetting data for NIGHT_IRRIGATED to 0 in database in main.py")
+            dolog("Main.py - Resetting data for NIGHT_IRRIGATED to 0 in database")
     
         elif now_time >= time(17,00) and now_time < time(18,00) and dirrigated == 1:
             #Making sure irrigation setting is restored in db after irrigation timeframe
@@ -84,11 +84,11 @@ try:
             #Sleeping for a second
             t.sleep(1)
         
-            dolog("Resetting data for DAY_IRRIGATED to 0 in database in main.py")
+            dolog("Main.py - Resetting data for DAY_IRRIGATED to 0 in database")
     
         else:
             print("No irrigation at this point")
-            dolog("Main.py script reached end of loop without starting irrigation, loop starts from the top again")
+            dolog("Main.py - Script reached end of loop without starting irrigation, loop starts from the top again")
         
             #Sleeping for a second
             t.sleep(1)
