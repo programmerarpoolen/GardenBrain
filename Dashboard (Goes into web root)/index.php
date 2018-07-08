@@ -179,7 +179,7 @@ $config = json_decode($loadconfig);
 			$humdata = round($data_array[2]);
 			
 			// These make sure we show irrigation time in minutes and not in seconds as we have in the database
-			if ($irrigation_array[0] > 0 and date("H") > 1)
+			if ($irrigation_array[0] > 0 and date("H") != 1)
 				{
 					if ($npassedtime > 0)
 						{
