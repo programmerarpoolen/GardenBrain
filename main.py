@@ -49,7 +49,7 @@ try:
     
         elif now_time >= time(16,00) and now_time < time(17,00):
             #Start subprocess if irrigation hasn't been done yet
-            if irrigated == 0:
+            if dirrigated == 0:
                 print("Perhaps some extra irrigation?")
                 try:
                     # Old part that was buggy
