@@ -6,7 +6,7 @@ import time
 import sys
 import MySQLdb
 import subprocess
-from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch
+from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch,keepopen
 import json
 
 #Loading the JSON config file
@@ -116,6 +116,11 @@ try:
 
 	    #Waiting for a set number of seconds before checking data and writing to database again
         time.sleep(299)
+        
+        #making sure the scripts we started in the beginning of this script are still running, and restarting them if needed
+        keepopen('main.py')
+        keepopen('analyzer.py')
+        keepopen('scheduled.py')
 
 except KeyboardInterrupt:
     pass
