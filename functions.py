@@ -538,3 +538,14 @@ def write_weather():
     db.close()
     return;
         
+#This function opens a script from the program folder if it's not running already
+def keepopen(process_name):
+
+    tmp = os.popen("ps -Af").read()
+
+    if process_name not in tmp[:]:
+        subprocess.Popen(['/home/pi/GardenBrain/'+process_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print("The script is not running. Starting the script now.")
+    else:
+        print("The script is already running.")
+    return;
