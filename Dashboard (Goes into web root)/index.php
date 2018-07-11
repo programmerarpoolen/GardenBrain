@@ -179,7 +179,7 @@ $config = json_decode($loadconfig);
 			$humdata = round($data_array[2]);
 			
 			// These make sure we show irrigation time in minutes and not in seconds as we have in the database
-			if ($irrigation_array[0] > 0 and date("H") != 1)
+			if ($irrigation_array[0] > 0 and date("H") != 1 )
 				{
 					if ($npassedtime > 0)
 						{
@@ -235,10 +235,17 @@ $config = json_decode($loadconfig);
 			// This function toggles the IRRIGATE_NOW value in database
 			function irrigate_now($irrigationstart)
 			{
+				// Loading Configuration file data
+				$loadconfig = file_get_contents("config.json");
+				$config = json_decode($loadconfig);
+				
 				// Connecting to MySQL
 				$con=mysqli_connect($config->database->host,$config->database->user,$config->database->password,$config->database->dbname);
 				// Checking the connection
-				mysqli_connect_errno();
+				if (mysqli_connect_errno())
+				{
+				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				}
 					
 				// Setting the appropriate SQL query depending on what the current DB setting is
 				if ($irrigationstart == 0)
@@ -258,10 +265,17 @@ $config = json_decode($loadconfig);
 			// This function reboots the Raspberry Pi - It runs the python script, but the Pi isn't rebooting?
 			function runreboot()
 			{
+				// Loading Configuration file data
+				$loadconfig = file_get_contents("config.json");
+				$config = json_decode($loadconfig);
+				
 				// Connecting to MySQL
 				$con=mysqli_connect($config->database->host,$config->database->user,$config->database->password,$config->database->dbname);
 				// Checking the connection
-				mysqli_connect_errno();
+				if (mysqli_connect_errno())
+				{
+				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				}
 					
 				// Setting REBOOTNOW value in database to 1
 				$sql = "UPDATE weather_settings SET REBOOTNOW='1'";
@@ -269,6 +283,7 @@ $config = json_decode($loadconfig);
 					
 				// Closing the MySQL connection
 				mysqli_close($con);
+				echo "<script> window.alert('The system is going down for reboot now'); </script>";
 			}
 			
 			// This function converts uptime date and current date to current uptime
