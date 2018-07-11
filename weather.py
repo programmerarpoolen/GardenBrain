@@ -54,6 +54,8 @@ except:
 sense = SenseHat()
 sense.clear()
 
+time.sleep(5)
+
 try:
     
     #Running the main weather monitor loop
