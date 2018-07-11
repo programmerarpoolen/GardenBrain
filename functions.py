@@ -288,7 +288,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 14 - 18 degrees
     elif avtemp >= 14.1 and avtemp <= 18.0:
-        basetime = 1.3
+        basetime = 1.5
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 14 and 18 degrees')
         
@@ -306,7 +306,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 18 - 22 degrees
     elif avtemp >= 18.1 and avtemp <= 22.0:
-        basetime = 1.4
+        basetime = 1.9
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 18 and 22 degrees')
         
@@ -324,7 +324,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 22 - 25 degrees
     elif avtemp >= 22.1 and avtemp <= 25.0:
-        basetime = 1.6
+        basetime = 2.2
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 22 and 25 degrees')
         
@@ -342,7 +342,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 25 - 28 degrees
     elif avtemp >= 25.1 and avtemp <= 28.0:
-        basetime = 1.7
+        basetime = 2.4
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 25 and 28 degrees')
         
@@ -360,7 +360,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 28 - 31 degrees
     elif avtemp >= 28.1 and avtemp <= 31.0:
-        basetime = 1.8
+        basetime = 2.5
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 28 and 31 degrees')
         
@@ -378,7 +378,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 31 - 34 degrees
     elif avtemp >= 31.1 and avtemp <= 34.0:
-        basetime = 2.0
+        basetime = 2.6
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 31 and 34 degrees')
         
@@ -396,7 +396,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature over 34 degrees
     elif avtemp >= 34.1:
-        basetime = 2.1
+        basetime = 2.8
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is over 34 degrees')
         
