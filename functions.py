@@ -243,7 +243,10 @@ def averager(incoming):
     for i in incoming:
         datasummary = datasummary + i[0]
         itemsnumber = itemsnumber + 1
-    dataaverage = datasummary / itemsnumber
+    try:
+        dataaverage = datasummary / itemsnumber
+    except:
+        dataaverage = 0
     return dataaverage
 
 #This function takes incoming average temperature, humidity, and pressure and returns how many seconds to add to irrigation
