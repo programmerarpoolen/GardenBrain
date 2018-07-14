@@ -247,6 +247,8 @@ def averager(incoming):
         dataaverage = datasummary / itemsnumber
     except:
         dataaverage = 0
+        logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+        logging.info('Functions.py - ZeroDivisionError occured in averager function, returning a 0')
     return dataaverage
 
 #This function takes incoming average temperature, humidity, and pressure and returns how many seconds to add to irrigation
