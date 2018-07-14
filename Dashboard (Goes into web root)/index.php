@@ -198,7 +198,7 @@ $config = json_decode($loadconfig);
 				}	else {
 					$nirritime = "0";
 				}
-			if ($irrigation_array[1] > 0 and date("H") > 16)
+			if ($irrigation_array[1] > 0 and date("H") < 16)
 				{
 					$dirritime = substr($irrigation_array[1]/60,0,3);
 				}	else {
