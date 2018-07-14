@@ -105,12 +105,37 @@ try:
         
             #Sleeping for a second
             t.sleep(1)
+            
+            #Checking weather and temperature, and increasing daytime irrigation if it's sunny and hot
+            currentweather = dbfetch('WEATHERNOW','weather_settings')
+            daycurrent = dbfetch('DAY_EXTRA','weather_settings')
+            dayupdated = 0
+            if currentweather == 3 and temp_average > 35:
+                dayupdated = daycurrent + 5
+                dolog("Analyzer.py - Today it's sunny and hot so we're increasing DAY_EXTRA with 5 seconds")
+            elif currentweather == 3 and temp_average > 30:
+                dayupdated = daycurrent + 4
+                dolog("Analyzer.py - Today it's sunny and hot so we're increasing DAY_EXTRA with 4 seconds")
+            elif currentweather == 3 and temp_average > 25:
+                dayupdated = daycurrent + 2
+                dolog("Analyzer.py - Today it's sunny and hot so we're increasing DAY_EXTRA with 2 seconds")
+            elif currentweather == 3 and temp_average > 20:
+                dayupdated = daycurrent + 1
+                dolog("Analyzer.py - Today it's sunny and hot so we're increasing DAY_EXTRA with 1 second")
+        
+            #Sleeping for a second
+            t.sleep(1)
 
             #Checking if pressurecompare found that pressure is at least 1% higher today and if so increasing DAY_EXTRA
             if addextra == 1:
-                dolog("Analyzer.py - Seems pressure is 1% higher now than 24 hours ago so we're increasing DAY_EXTRA with 2 seconds")
-                daycurrent = dbfetch('DAY_EXTRA','weather_settings')
-                dayupdated = daycurrent + 2
+                dolog("Analyzer.py - Pressure is 1% higher now than 24 hours ago so we're increasing DAY_EXTRA with 2 seconds")
+                if dayupdated > daycurrent:
+                    dayupdated = dayupdated + 2
+                else:
+                    dayupdated = daycurrent + 2
+            
+            #Updating DAY_EXTRA in the database with new value
+            if dayupdated > daycurrent:
                 dbupdate('DAY_EXTRA','weather_settings',dayupdated)
                 
         #Updating the weather settings in database according to weather data
