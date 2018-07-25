@@ -21,7 +21,7 @@ if resetall == 1:
     dbdroptable('weather_settings')
     dbcreatewstables()
     dbcreatewdtables()
-    db_ws_insert('0','0','0','0','0','0','0','0')
+    db_ws_insert('0','0','0','0','0','0','0','0','0')
 
 #Running the Main script which analyzes the data and sets irrigation timer accordingly
 try:
@@ -61,13 +61,13 @@ try:
     #Running the main weather monitor loop
     while True:
 
-	#Printing a blank row
+	    #Printing a blank row
         print(" ")
 
-	#Printing date and time
+	    #Printing date and time
         print("The date and time is: ",time.strftime("%Y-%m-%d %H:%M"))
 	
-	#Getting temperature from the SenseHat
+	    #Getting temperature from the SenseHat
         temp = sense.get_temperature()
         temp = round(temp, 1)
         
@@ -77,28 +77,28 @@ try:
         array2 = array[1].split("'")
         cpu_temp = array2[0]
         
-        #Correcting the temperature using the CPU temperature and a factor and printing the value
+        #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
         temp = temp - ((float(cpu_temp) - temp)/5.466)
         temp = round(temp, 1)
         print("Temperature C",temp)
         time.sleep(1)
 	
-	#Getting humidity from the SenseHat and printing the value
+	    #Getting humidity from the SenseHat and printing the value
         humidity = sense.get_humidity()
         humidity = round(humidity, 1)
         print("Humidity :",humidity)
         time.sleep(1)
 	
-	#Getting pressure from the SenseHat and printing the value
+	    #Getting pressure from the SenseHat and printing the value
         pressure = sense.get_pressure()
         pressure = round(pressure, 1)
         print("Pressure:",pressure)
         time.sleep(1)
 		
-	#Showing weather data on the LED matrix (optional)
-	#sense.show_message("  Temperature " + str(temp) + "C" + "  Humidity: " + str(humidity) + "%" + "  Pressure: " + str(pressure) + "hPA", scroll_speed=(0.08), text_colour=[102,0,204])
+	    #Showing weather data on the LED matrix (optional)
+	    #sense.show_message("  Temperature " + str(temp) + "C" + "  Humidity: " + str(humidity) + "%" + "  Pressure: " + str(pressure) + "hPA", scroll_speed=(0.08), text_colour=[102,0,204])
 
-	#Clearing any data from the SenseHat
+	    #Clearing any data from the SenseHat
         sense.clear()
         
         #If fetching current pressure and humidity fails, then use previous entry in database (to remove incorrect zeros in the data)
