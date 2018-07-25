@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Import required Python libraries
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import MySQLdb
 import RPi.GPIO as GPIO
 import time
@@ -41,9 +41,9 @@ def dbupdate(dbcolumn,dbtable,newvalue):
         config = json.loads(open('/var/www/html/config.json').read())
         db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
         cursor = db.cursor()
-        sql = "UPDATE "+dbtable+" SET "+dbcolumn+" = "+newvalue
+        sql = "UPDATE "+dbtable+" SET "+dbcolumn+" = %s"   
         try:
-            cursor.execute(sql)
+            cursor.execute(sql,(newvalue))
             db.commit()
         
         except:
@@ -73,7 +73,7 @@ def dbcreatewstables():
     config = json.loads(open('/var/www/html/config.json').read())
     db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
     cursor = db.cursor()
-    sql = """CREATE TABLE weather_settings (NIGHT_SECONDS DECIMAL(5,2),DAY_EXTRA DECIMAL(5,2), NIGHT_IRRIGATED INT, DAY_IRRIGATED INT, UPTIME DATETIME, IRRIGATE_NOW INT, WEATHERNOW INT, REBOOTNOW INT)"""
+    sql = """CREATE TABLE weather_settings (NIGHT_SECONDS DECIMAL(5,2),DAY_EXTRA DECIMAL(5,2), NIGHT_IRRIGATED INT, DAY_IRRIGATED INT, UPTIME DATETIME, IRRIGATE_NOW INT, WEATHERNOW INT, REBOOTNOW INT, MANSTART DATETIME)"""
     try:
         cursor.execute(sql)
         db.commit()
@@ -101,13 +101,13 @@ def dbcreatewdtables():
     return
 
 #This function connects to database to write initial values to the weather_settings table        
-def db_ws_insert(ns,de,ni,di,ut,ir,wn,rn):
+def db_ws_insert(ns,de,ni,di,ut,ir,wn,rn,ms):
     config = json.loads(open('/var/www/html/config.json').read())
     db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
     cursor = db.cursor()
-    sql = "INSERT INTO weather_settings VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO weather_settings VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     try:
-        cursor.execute(sql,(ns,de,ni,di,ut,ir,wn,rn))
+        cursor.execute(sql,(ns,de,ni,di,ut,ir,wn,rn,ms))
         db.commit()
         
     except:
@@ -554,3 +554,28 @@ def keepopen(process_name):
     else:
         print("The script is already running.")
     return;
+    
+#This function returns the time in seconds between started manual irrigation and now
+def mandiff():
+
+    config = json.loads(open('/var/www/html/config.json').read())
+    db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
+    cursor = db.cursor()
+    sql = "select MANTIME from weather_settings"
+    cursor.execute(sql)
+    global delay
+    fetched = cursor.fetchone()
+    dbtime = fetched[0]
+    cursor.close()
+    db.close()
+    print("Current db time is: ",dbtime)
+    print("")
+    nowtime = time.strftime("%Y-%m-%d %H:%M:%S")
+    nowtime = datetime.strptime(nowtime,"%Y-%m-%d %H:%M:%S")
+    print("Current time is: ",nowtime)
+    print("")
+    difference = nowtime - dbtime
+    difference = difference.total_seconds()
+    print("The difference is: ",difference)
+    print("")
+    return difference;
