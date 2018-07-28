@@ -80,6 +80,7 @@ try:
         #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
         temp = temp - ((float(cpu_temp) - temp)/5.466)
         temp = round(temp, 1)
+        temp = temp - 1
         print("Temperature C",temp)
         time.sleep(1)
 	
