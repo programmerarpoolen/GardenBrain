@@ -41,7 +41,7 @@ def dbupdate(dbcolumn,dbtable,newvalue):
         config = json.loads(open('/var/www/html/config.json').read())
         db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
         cursor = db.cursor()
-        sql = "UPDATE "+dbtable+" SET "+dbcolumn+" = %s"   
+        sql = "UPDATE "+dbtable+" SET "+dbcolumn+" = %s"
         try:
             cursor.execute(sql,(newvalue))
             db.commit()
@@ -510,15 +510,15 @@ def write_weather():
     pressure = fetched[3]
     
     # Setting current weather depending on weather data
-    if humidity > 50 and pressure < 995:
+    if humidity > 50 and pressure < 995 or humidity > 85:
         current = 0
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Writing weather as Rainy')
-    elif humidity < 40 and pressure > 1005:
+    elif humidity < 40 and pressure > 1005 or humidity < 30:
         current = 3
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Writing weather as Sunny')
-    elif humidity < 50 and pressure < 995:
+    elif humidity < 50 and pressure < 995 or humidity > 60:
         current = 1
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Writing weather as Cloudy')
