@@ -262,7 +262,7 @@ $config = json_decode($loadconfig);
 				mysqli_close($con);
 			}
 			
-			// This function reboots the Raspberry Pi - It runs the python script, but the Pi isn't rebooting?
+			// This function reboots the Raspberry Pi
 			function runreboot()
 			{
 				// Loading Configuration file data
