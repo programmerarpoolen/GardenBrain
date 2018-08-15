@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Import required Python libraries
-from datetime import datetime, time, timedelta
+from datetime import datetime, time, timedelta, date
 import MySQLdb
 import RPi.GPIO as GPIO
 import time
@@ -10,6 +10,7 @@ import sys
 import logging
 import os
 import json
+from astral import Astral
     
 #This function logs anything to the project events.log file
 def dolog(message):
@@ -487,7 +488,117 @@ def sysstart():
         db.close()
         return;
     except:
-        print("Database connection failed")    
+        print("Database connection failed")
+
+#This function gets sun related data for a set location
+def sundata():
+
+    #This code uses the Astral library (which needs to be installed together with the dependency Pytz) to get sun related data for a set location, such as sunrise and sunset.
+    
+    config = json.loads(open('/var/www/html/config.json').read())
+
+    now = datetime.now()
+    now_time = now.time()
+
+    print ('\nTime now is %s \n' % now_time)
+
+    city_name = config['location']['city']
+
+    a = Astral()
+
+    a.solar_depression = 'civil'
+
+    city = a[city_name]
+
+    print('Information for %s/%s\n' % (city_name, city.region))
+
+    timezone = city.timezone
+
+    print('Timezone: %s' % timezone)
+
+    print('Latitude: %.02f; Longitude: %.02f\n' % \
+    (city.latitude, city.longitude))
+
+    today = datetime.strptime(time.strftime("%Y-%m-%d"), '%Y-%m-%d')
+
+    sun = city.sun(date=datetime.date(today), local=True)
+
+    dawn = str(sun['dawn'])[11:-6]
+    dawn = datetime.strptime(dawn, '%H:%M:%S').time()
+    sunrise = str(sun['sunrise'])[11:-6]
+    sunrise = datetime.strptime(sunrise, '%H:%M:%S').time()
+    noon = str(sun['noon'])[11:-6]
+    noon = datetime.strptime(noon, '%H:%M:%S').time()
+    sunset = str(sun['sunset'])[11:-6]
+    sunset = datetime.strptime(sunset, '%H:%M:%S').time()
+    dusk = str(sun['dusk'])[11:-6]
+    dusk = datetime.strptime(dusk, '%H:%M:%S').time()
+
+    print('Dawn:    %s' % dawn)
+    print('Sunrise: %s' % sunrise)
+    print('Noon:    %s' % noon)
+    print('Sunset:  %s' % sunset)
+    print('Dusk:    %s \n' % dusk)
+
+    if now_time > dawn:
+        print ('Time is after dawn')
+    else:
+        print ('Time is before dawn')
+
+    if now_time > sunrise:
+        print ('Time is after sunrise')
+    else:
+        print ('Time is before sunrise')
+
+    if now_time > noon:
+        print ('Time is after noon')
+    else:
+        print ('Time is before noon')
+
+    if now_time > sunset:
+        print ('Time is after sunset')
+    else:
+        print ('Time is before sunset')
+
+    if now_time > dusk:
+        print ('Time is after dusk\n')
+    else:
+        print ('Time is before dusk\n')
+        
+    if sunset > now_time and now_time > sunrise:
+        current = "day"
+        total = datetime.combine(date.today(), sunset) - datetime.combine(date.today(), sunrise)
+        total = total.total_seconds()
+        print('The following is the time in seconds in a day %s\n' % total)
+        actual = datetime.combine(date.today(), now_time) - datetime.combine(date.today(), sunrise)
+        actual = actual.total_seconds()
+        percentage = actual / total * 100
+        percentage = round(percentage, 2)
+        print('We have passed %s percent of the day\n' % percentage)
+        logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+        logging.info('Functions.py - It is daytime and %s percent of the day has passed' % percentage)
+    else:
+        current = "night"
+        total1 = datetime.combine(date.today(), datetime.strptime('23:59:59', '%H:%M:%S').time()) - datetime.combine(date.today(), sunset)
+        total2 = datetime.combine(date.today(), sunrise) - datetime.combine(date.today(), datetime.strptime('00:00:00', '%H:%M:%S').time())
+        total = total1.total_seconds() + total2.total_seconds()
+        print('The following is the time in seconds in a night %s\n' % total)
+        if now_time > sunset and now_time < datetime.strptime('23:59:59', '%H:%M:%S').time():
+            actual = datetime.combine(date.today(), now_time) - datetime.combine(date.today(), sunset)
+            actual = actual.total_seconds()
+            percentage = actual / total * 100
+            percentage = round(percentage, 2)
+            print('We have passed %s percent of the night\n' % percentage)
+        else:
+            actual = datetime.combine(date.today(), datetime.strptime('23:59:59', '%H:%M:%S').time()) - datetime.combine(date.today(), sunset) + time_now
+            actual = actual.total_seconds()
+            percentage = actual / total * 100
+            percentage = round(percentage, 2)
+            print('We have passed %s percent of the night\n' % percentage)
+        logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+        logging.info('Functions.py - It is night time and %s percent of the night has passed' % percentage)
+        
+    return current, percentage
 
 #This function saves the current weather to database. 0 = Rain, 1 = Cloudy, 2 = Sun and clouds, 3 = Sunny
 def write_weather():
@@ -507,7 +618,43 @@ def write_weather():
     # This sets usable variables in the correct format
     temperature = fetched[1]
     humidity = fetched[2]
+    humidity = float(humidity)
     pressure = fetched[3]
+    
+    # This returns day or night, and how much of the day or night that has passed in percentage
+    time_of_day = sundata()
+    
+    # Modifying the humidity data, depending on time of day, since it's way more humid in the night time regardless if it's raining or not
+    if time_of_day[0] == "day":
+        if time_of_day[1] > 75 and time_of_day[1] < 85:
+            humidity = humidity * 1.05
+        elif time_of_day[1] > 65 and time_of_day[1] < 75:
+            humidity = humidity * 1.1
+        elif time_of_day[1] > 55 and time_of_day[1] < 65:
+            humidity = humidity * 1.15
+        elif time_of_day[1] > 45 and time_of_day[1] < 55:
+            humidity = humidity * 1.2
+        elif time_of_day[1] > 35 and time_of_day[1] < 45:
+            humidity = humidity * 1.15
+        elif time_of_day[1] > 25 and time_of_day[1] < 35:
+            humidity = humidity * 1.1
+        elif time_of_day[1] > 15 and time_of_day[1] < 25:
+            humidity = humidity * 1.05
+    else:
+        if time_of_day[1] > 75 and time_of_day[1] < 85:
+            humidity = humidity * 0.75
+        elif time_of_day[1] > 65 and time_of_day[1] < 75:
+            humidity = humidity * 0.65
+        elif time_of_day[1] > 55 and time_of_day[1] < 65:
+            humidity = humidity * 0.55
+        elif time_of_day[1] > 45 and time_of_day[1] < 55:
+            humidity = humidity * 0.5
+        elif time_of_day[1] > 35 and time_of_day[1] < 45:
+            humidity = humidity * 0.55
+        elif time_of_day[1] > 25 and time_of_day[1] < 35:
+            humidity = humidity * 0.65
+        elif time_of_day[1] > 15 and time_of_day[1] < 25:
+            humidity = humidity * 0.75
     
     # Setting current weather depending on weather data
     if humidity > 50 and pressure < 995 or humidity > 85:
@@ -579,3 +726,4 @@ def mandiff():
     print("The difference is: ",difference)
     print("")
     return difference;
+    
