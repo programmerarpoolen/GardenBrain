@@ -590,8 +590,11 @@ def sundata():
             percentage = round(percentage, 2)
             print('We have passed %s percent of the night\n' % percentage)
         else:
-            actual = datetime.combine(date.today(), datetime.strptime('23:59:59', '%H:%M:%S').time()) - datetime.combine(date.today(), sunset) + time_now
-            actual = actual.total_seconds()
+            previous_evening = datetime.combine(date.today(), datetime.strptime('23:59:59', '%H:%M:%S').time()) - datetime.combine(date.today(), sunset)
+            from_midnight = datetime.combine(date.today(), now_time) - datetime.combine(date.today(), datetime.strptime('00:00:00', '%H:%M:%S').time())
+            previous_evening = previous_evening.total_seconds()
+            from_midnight = from_midnight.total_seconds()
+            actual = previous_evening + from_midnight
             percentage = actual / total * 100
             percentage = round(percentage, 2)
             print('We have passed %s percent of the night\n' % percentage)
