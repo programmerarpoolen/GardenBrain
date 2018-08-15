@@ -4,5 +4,8 @@
         "user" : "user",
         "password" : "password",
         "dbname" : "database_name"
+    },
+    "location" : {
+        "city" : "Stockholm"
     }
 }
