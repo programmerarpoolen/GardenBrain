@@ -629,7 +629,7 @@ def write_weather():
     
     # Modifying the humidity data, depending on time of day, since it's way more humid in the night time regardless if it's raining or not
     if time_of_day[0] == "day":
-        if time_of_day[1] > 75 and time_of_day[1] < 85:
+        if time_of_day[1] > 75 and time_of_day[1] < 99:
             humidity = humidity * 0.85
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.85')
@@ -653,12 +653,12 @@ def write_weather():
             humidity = humidity * 0.9
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.9')
-        elif time_of_day[1] > 15 and time_of_day[1] < 25:
+        elif time_of_day[1] > 1 and time_of_day[1] < 25:
             humidity = humidity * 0.85
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.85')
     else:
-        if time_of_day[1] > 75 and time_of_day[1] < 85:
+        if time_of_day[1] > 75 and time_of_day[1] < 99:
             humidity = humidity * 0.75
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.75')
@@ -682,7 +682,7 @@ def write_weather():
             humidity = humidity * 0.65
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.65')
-        elif time_of_day[1] > 15 and time_of_day[1] < 25:
+        elif time_of_day[1] > 1 and time_of_day[1] < 25:
             humidity = humidity * 0.75
             logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
             logging.info('Functions.py - Multiplying humidity by 0.75')
