@@ -630,41 +630,69 @@ def write_weather():
     # Modifying the humidity data, depending on time of day, since it's way more humid in the night time regardless if it's raining or not
     if time_of_day[0] == "day":
         if time_of_day[1] > 75 and time_of_day[1] < 85:
-            humidity = humidity * 1.05
+            humidity = humidity * 0.85
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.85')
         elif time_of_day[1] > 65 and time_of_day[1] < 75:
-            humidity = humidity * 1.1
+            humidity = humidity * 0.9
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.9')
         elif time_of_day[1] > 55 and time_of_day[1] < 65:
-            humidity = humidity * 1.15
+            humidity = humidity * 0.95
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.95')
         elif time_of_day[1] > 45 and time_of_day[1] < 55:
-            humidity = humidity * 1.2
+            humidity = humidity * 1
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 1')
         elif time_of_day[1] > 35 and time_of_day[1] < 45:
-            humidity = humidity * 1.15
+            humidity = humidity * 0.95
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.95')
         elif time_of_day[1] > 25 and time_of_day[1] < 35:
-            humidity = humidity * 1.1
+            humidity = humidity * 0.9
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.9')
         elif time_of_day[1] > 15 and time_of_day[1] < 25:
-            humidity = humidity * 1.05
+            humidity = humidity * 0.85
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.85')
     else:
         if time_of_day[1] > 75 and time_of_day[1] < 85:
             humidity = humidity * 0.75
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.75')
         elif time_of_day[1] > 65 and time_of_day[1] < 75:
             humidity = humidity * 0.65
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.65')
         elif time_of_day[1] > 55 and time_of_day[1] < 65:
             humidity = humidity * 0.55
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.55')
         elif time_of_day[1] > 45 and time_of_day[1] < 55:
             humidity = humidity * 0.5
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.5')
         elif time_of_day[1] > 35 and time_of_day[1] < 45:
             humidity = humidity * 0.55
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.55')
         elif time_of_day[1] > 25 and time_of_day[1] < 35:
             humidity = humidity * 0.65
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.65')
         elif time_of_day[1] > 15 and time_of_day[1] < 25:
             humidity = humidity * 0.75
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Multiplying humidity by 0.75')
     
     # Setting current weather depending on weather data
     if humidity > 50 and pressure < 995 or humidity > 85:
         current = 0
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Writing weather as Rainy')
-    elif humidity < 40 and pressure > 1005 or humidity < 30:
+    elif humidity < 40 and pressure > 1005 or humidity < 30 or pressure > 1015 and humidity < 60:
         current = 3
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Writing weather as Sunny')
