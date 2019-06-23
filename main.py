@@ -4,7 +4,7 @@
 import time as t
 import subprocess
 from datetime import datetime, time
-from functions import dbfetch,dbupdate,weather_cleanup,dolog,sysstart
+from functions import dbfetch,dbupdate,weather_cleanup,dolog,sysstart,logsave
 
 #Writing system start time to database for showing uptime in the Dashboard
 sysstart()
@@ -14,6 +14,13 @@ t.sleep(1)
 
 #Declaring variable relay_proc
 relay_proc = None
+
+#Declaring variable logsaved
+logsaved = 0
+
+#Setting manual push button gpio to input
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 try:
 
@@ -25,14 +32,13 @@ try:
         now_time = now.time()
         nirrigated = dbfetch('NIGHT_IRRIGATED','weather_settings')
         dirrigated = dbfetch('DAY_IRRIGATED','weather_settings')
+        nirriseconds = dbfetch('NIGHT_SECONDS','weather_settings')
     
         if now_time >= time(01,00) and now_time < time(02,00):
             #Start subprocess if irrigation hasn't been done yet
             if nirrigated == 0:
                 print("Time for some irrigation!")
                 try:
-                    # Old part that was buggy
-                    # p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                     
                     if relay_proc is not None and relay_proc.poll() is None:
                          print('process is already running')
@@ -52,8 +58,6 @@ try:
             if dirrigated == 0:
                 print("Perhaps some extra irrigation?")
                 try:
-                    # Old part that was buggy
-                    # p = subprocess.Popen(['/home/pi/GardenBrain/relay.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                     
                     if relay_proc is not None and relay_proc.poll() is None:
                          print('process is already running')
@@ -98,6 +102,21 @@ try:
         
         #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
         t.sleep(900)
+            
+        #If time is between 23:44 and 23:59 then we move log to day log and change the variable logsaved to 1
+        if now_time > time(23,44) and now_time < time(23,59) and logsaved == 0:
+            logsave()
+            logsaved = 1
+            dolog("Main.py - Time is between 23:44 and 23:59, so we're running the logsave function")
+            
+        #If time is after 00:01 then we change logsaved variable back to 0
+        elif now_time > time(00,01):
+            logsaved = 0
+            
+        #Rebooting the system if time is more than 2:30 and there's 0 seconds on night irrigation
+        if now_time > time(02,30) and float(nirriseconds) < 0.5:
+            dbupdate('REBOOTNOW','weather_settings','1')
+            dolog("Main.py - Rebooting the system as time is after 2:30 and we still have 0 seconds of night irrigation logged")
 
 except KeyboardInterrupt:
     pass

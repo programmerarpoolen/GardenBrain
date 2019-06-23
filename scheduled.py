@@ -8,8 +8,8 @@ import time
 from functions import dbfetch,dbupdate,dolog,relay_manual,relay_delay,sysreboot,mandiff
 import logging
         
-#Sleeping for 3 seconds
-time.sleep(3)
+#Sleeping for 1 seconds
+time.sleep(1)
 
 #Running a loop to check for scheduled tasks
 while True:

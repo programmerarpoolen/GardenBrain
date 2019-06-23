@@ -50,6 +50,15 @@ try:
 except:
     dolog("Weather.py - Starting scheduled tasks script failed")
 
+#Starting hardware button script in the background which wait for hardware button push to start or stop irrigation
+try:
+    subprocess.Popen(['/home/pi/GardenBrain/hw_button.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    dolog("Weather.py - Starting scheduled tasks script succeeded")
+    time.sleep(1)
+    
+except:
+    dolog("Weather.py - Starting hardware button script failed")
+
 #Clearing any data on the SenseHat
 sense = SenseHat()
 sense.clear()

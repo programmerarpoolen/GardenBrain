@@ -6,6 +6,7 @@ from functions import keepopen
 try:
 
     keepopen('weather.py')
+    keepopen('hw_button.py')
 
 except KeyboardInterrupt:
     pass
