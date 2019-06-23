@@ -25,11 +25,9 @@ try:
     
         if GPIO.input(GPIO_CONTROL_BUTTON) == GPIO.HIGH:
         
-            print("Button has been pressed")
-        
             if current_state == 3:
             
-                print("Stopping relay")
+                #Stopping relay
                 
                 dbupdate('IRRIGATE_NOW','weather_settings','2')
             
@@ -37,20 +35,16 @@ try:
                 GPIO.setup(GPIO_CONTROL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             
             elif current_state == 0:
-            
-                print("Starting relay")
+                
+                #Starting relay
                 
                 dbupdate('IRRIGATE_NOW','weather_settings','1')
             
                 #Resetting the state of the GPIO
                 GPIO.setup(GPIO_CONTROL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            
-        else:
         
-            print("Button has not been pressed")
-        
-        #Sleeping for a 0.2 second
-        time.sleep(0.2)
+        #Sleeping for a 0.5 second
+        time.sleep(0.5)
         
         #Cleanup
         GPIO.cleanup()
