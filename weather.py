@@ -141,6 +141,7 @@ try:
         keepopen('main.py')
         keepopen('analyzer.py')
         keepopen('scheduled.py')
+        keepopen('hw_button.py')
 
 except KeyboardInterrupt:
     pass
