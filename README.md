@@ -19,3 +19,8 @@ And this is my first ever RPi project, my first ever work in Python and PHP, I'v
 Cleaning the code is helping too, in case you who are reading this feels like contributing :)
 
 Especially helpful is contributions around data usage to get weather icon correct and dashboard more useful, but also with how to best set irrigation times in the functions.py file in the getseconds function.
+
+UPDATE: 
+The project has now been updated to work without screen, and with a hardware button for toggling irrigation on/off if wanted. 
+It still works with screen and web dashboard too though.
+I have also uploaded a 3D design file pack containing 3D files for full enclosure, for those that need that and has a 3D printer available.
