@@ -31,7 +31,7 @@ try:
         length = time.time() - start
         print(length)
         
-        if length > 1:
+        if length > 0.4:
             
             if current_state == 3:
                 
