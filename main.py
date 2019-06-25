@@ -18,10 +18,6 @@ relay_proc = None
 #Declaring variable logsaved
 logsaved = 0
 
-#Setting manual push button gpio to input
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
 try:
 
     #Time checking loop that starts irrigation at set times
