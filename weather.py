@@ -91,7 +91,7 @@ try:
         cpu_temp = array2[0]
         
         #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
-        temp = temp - ((float(cpu_temp) - temp)/8.466)
+        temp = temp - ((float(cpu_temp) - temp)/1)
         temp = round(temp, 1)
         temp = temp - 1
         print("Temperature C",temp)
