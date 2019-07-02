@@ -15,11 +15,11 @@ t.sleep(15)
 #Getting data for the delay variable which determines how long the relay stays open
 if now_time >= time(01,00) and now_time <= time(02,00):
     delay = dbfetch('NIGHT_SECONDS','weather_settings')
-    dolog("NIGHT_SECONDS received from database in relay.py :")
+    dolog("Relay.py - NIGHT_SECONDS received from database :")
     dolog(delay)
 elif now_time >= time(16,00) and now_time <= time(17,00):
     delay = dbfetch('DAY_EXTRA','weather_settings')
-    dolog("DAY_EXTRA received from database in relay.py :")
+    dolog("Relay.py - DAY_EXTRA received from database :")
     dolog(delay)
 else:
     #Setting delay to a default 60 seconds if the script is run outside of the set timeframes
@@ -44,8 +44,8 @@ if delay != 0:
 if now_time >= time(01,00) and now_time <= time(02,00):
     dbupdate('NIGHT_IRRIGATED','weather_settings','1')
     dbupdate('NIGHT_SECONDS','weather_settings','0')
-    dolog("Resetting NIGHT_SECONDS to 0 and setting NIGHT_IRRIGATED to 1 in database in relay.py")
+    dolog("Relay.py - Resetting NIGHT_SECONDS to 0 and setting NIGHT_IRRIGATED to 1 in database")
 elif now_time >= time(16,00) and now_time <= time(17,00):
     dbupdate('DAY_IRRIGATED','weather_settings','1')
     dbupdate('DAY_EXTRA','weather_settings','0')
-    dolog("Resetting DAY_EXTRA to 0 and setting DAY_IRRIGATED to 1 in database in relay.py")
+    dolog("Relay.py - Resetting DAY_EXTRA to 0 and setting DAY_IRRIGATED to 1 in database")

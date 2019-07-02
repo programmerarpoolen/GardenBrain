@@ -136,6 +136,7 @@ try:
             
             #Updating DAY_EXTRA in the database with new value
             if dayupdated > daycurrent:
+                
                 dbupdate('DAY_EXTRA','weather_settings',str(dayupdated))
                 
         #Updating the weather settings in database according to weather data

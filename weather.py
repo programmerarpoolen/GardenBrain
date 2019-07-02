@@ -6,7 +6,7 @@ import time
 import sys
 import MySQLdb
 import subprocess
-from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch,keepopen
+from functions import dolog,dbdroptable,dbcreatewstables,dbcreatewdtables,db_ws_insert,db_wd_insert,dbfetch,keepopen,tempcorrection
 import json
 
 #Loading the JSON config file
@@ -77,23 +77,10 @@ try:
         print("The date and time is: ",time.strftime("%Y-%m-%d %H:%M"))
 	
 	    #Getting temperature from the SenseHat
-        #temp = sense.get_temperature()
+        #temp = tempcorrection(sense.get_temperature())
         
         #Testing getting temperature from pressure to see if it's more accurate
-        temp = sense.get_temperature_from_pressure()
-        
-        temp = round(temp, 1)
-        
-        #Getting the CPU temperature for corrections
-        board_temp = subprocess.check_output("vcgencmd measure_temp", shell=True)
-        array = board_temp.split("=")
-        array2 = array[1].split("'")
-        cpu_temp = array2[0]
-        
-        #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
-        temp = temp - ((float(cpu_temp) - temp)/1)
-        temp = round(temp, 1)
-        temp = temp - 1
+        temp = tempcorrection(sense.get_temperature_from_pressure())
         print("Temperature C",temp)
         time.sleep(1)
 	

@@ -11,6 +11,7 @@ import logging
 import os
 import json
 from astral import Astral
+from shutil import copyfile
     
 #This function logs anything to the project events.log file
 def dolog(message):
@@ -174,8 +175,8 @@ def relay_manual(action):
     
     if action == "on":
         
-        # Sleeping for a second
-        time.sleep(1)
+        # Sleeping for a 0.1 seconds
+        time.sleep(0.1)
 
         # We will be using the BCM GPIO numbering
         GPIO.setmode(GPIO.BCM)
@@ -258,7 +259,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 4 - 10 degrees
     if avtemp >= 4.0 and avtemp <= 10.0:
-        basetime = 0.5
+        basetime = 0.3
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 4 and 10 degrees')
         
@@ -276,7 +277,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 10 - 14 degrees
     elif avtemp >= 10.1 and avtemp <= 14.0:
-        basetime = 1.0
+        basetime = 0.9
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 10 and 14 degrees')
         
@@ -294,7 +295,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 14 - 18 degrees
     elif avtemp >= 14.1 and avtemp <= 18.0:
-        basetime = 1.5
+        basetime = 1.4
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 14 and 18 degrees')
         
@@ -312,7 +313,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 18 - 22 degrees
     elif avtemp >= 18.1 and avtemp <= 22.0:
-        basetime = 1.9
+        basetime = 1.8
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 18 and 22 degrees')
         
@@ -758,3 +759,151 @@ def mandiff():
     print("")
     return difference;
     
+#This function returns the last few lines in the logfile to see what services has been run (incomplete)
+def lastlogs():
+    lines = 50
+    fname = '/home/pi/GardenBrain/events.log'
+    bufsize = 8192
+    fsize = os.stat(fname).st_size
+    iter = 0
+    with open(fname) as f:
+        if bufsize > fsize:
+            bufsize = fsize-1
+            data = []
+            while True:
+                iter +=1
+                f.seek(fsize-bufsize*iter)
+                data.extend(f.readlines())
+                if len(data) >= lines or f.tell() == 0:
+                    print(''.join(data[-lines:]))
+                    break
+
+#This function moves the current logs out of the main log file and saves it to daily log files instead, keeping one per day of the week (7 days in total)
+def logsave():
+    basefile = '/home/pi/GardenBrain/events.log'
+    thismoment = datetime.now()
+    weekday = thismoment.strftime("%A")
+    weekday = weekday.lower()
+    newfile = '/home/pi/GardenBrain/%s.log' % weekday
+    copyfile(basefile, newfile)
+    os.system('rm -f %s' % basefile)
+    
+#This function checks if the button is pressed and starts irrigation if it should, and stops it if it should. Expects arguments for current_state which can be "on" or "off" and also a timealive number in seconds.
+def push_button(current_state, timealive):
+
+    print("Manual button function")
+    
+    # We will be using the BCM GPIO numbering
+    GPIO.setmode(GPIO.BCM)
+
+    # Selecting which GPIO to target
+    GPIO_CONTROL_BUTTON = 5
+
+    # Set CONTROL to OUTPUT mode
+    GPIO.setup(GPIO_CONTROL_BUTTON, GPIO.IN)
+    
+    if GPIO.input(GPIO_CONTROL_BUTTON) == GPIO.HIGH:
+        
+        print("Button has been pressed")
+        
+        if current_state == 'on':
+            
+            # Selecting which GPIO to target
+            GPIO_CONTROL_RELAY = 6
+            
+            try:
+                #Stopping the relay
+                GPIO.output(GPIO_CONTROL_RELAY, False)
+            
+            except:
+                # We will be using the BCM GPIO numbering
+                GPIO.setmode(GPIO.BCM)
+
+                # Set CONTROL to OUTPUT mode
+                GPIO.setup(GPIO_CONTROL_RELAY, GPIO.OUT)
+    
+                #Starting the relay
+                GPIO.output(GPIO_CONTROL_RELAY, False)
+            
+            #Logging the event
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Relay has been switched off with hardware button')
+            
+            #Setting value for current_status
+            current_status = 'off'
+            
+            #Sleeping for a 0.2 second
+            time.sleep(0.2)
+            
+            #Resetting the state of the GPIO
+            GPIO.setup(GPIO_CONTROL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            
+        elif current_state == 'off':
+            
+            # Selecting which GPIO to target
+            GPIO_CONTROL_RELAY = 6
+            
+            # Sleeping for a 0.1 seconds
+            time.sleep(0.1)
+
+            # We will be using the BCM GPIO numbering
+            GPIO.setmode(GPIO.BCM)
+
+            # Set CONTROL to OUTPUT mode
+            GPIO.setup(GPIO_CONTROL_RELAY, GPIO.OUT)
+    
+            #Starting the relay
+            GPIO.output(GPIO_CONTROL_RELAY, True)
+            
+            #Logging the event
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Functions.py - Relay has been switched on with hardware button')
+            
+            #Setting value for current_status
+            current_status = 'on'
+            
+            #Sleeping for a 0.2 second
+            time.sleep(0.2)
+            
+            #Resetting the state of the GPIO
+            GPIO.setup(GPIO_CONTROL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+            
+    elif timealive > 285: 
+        
+        relay_manual('off')
+        
+        #Logging the event
+        logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+        logging.info('Functions.py - Relay has been switched off after being on for more than 5 minutes')
+        
+        #Setting value for current_status
+        current_status = 'off'
+        
+    else:
+        
+        print("Button has not been pressed")
+        
+        current_status = current_state
+        
+    #Cleanup
+    GPIO.cleanup()
+    
+    return current_status;
+    
+#This function recalculates the temperature reading with respect to enclosure and sensor placement
+def tempcorrection(temperature):
+    
+    temp = round(temperature, 1)
+    
+    #Getting the CPU temperature for corrections
+    board_temp = subprocess.check_output("vcgencmd measure_temp", shell=True)
+    array = board_temp.split("=")
+    array2 = array[1].split("'")
+    cpu_temp = array2[0]
+    
+    #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
+    temp = temp - ((float(cpu_temp) - temp)/2)
+    temp = round(temp, 1)
+    temp = temp - 16
+    
+    return temp
