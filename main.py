@@ -95,9 +95,6 @@ try:
             
             #Cleaning up any 1+ year old weather data
             weather_cleanup()
-        
-        #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
-        t.sleep(900)
             
         #If time is between 23:44 and 23:59 then we move log to day log and change the variable logsaved to 1
         if now_time > time(23,44) and now_time < time(23,59) and logsaved == 0:
@@ -113,6 +110,9 @@ try:
         if now_time > time(02,30) and float(nirriseconds) < 0.5:
             dbupdate('REBOOTNOW','weather_settings','1')
             dolog("Main.py - Rebooting the system as time is after 2:30 and we still have 0 seconds of night irrigation logged")
+        
+        #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
+        t.sleep(900)
 
 except KeyboardInterrupt:
     pass

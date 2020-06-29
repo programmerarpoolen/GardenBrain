@@ -331,7 +331,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 22 - 25 degrees
     elif avtemp >= 22.1 and avtemp <= 25.0:
-        basetime = 2.2
+        basetime = 2.4
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 22 and 25 degrees')
         
@@ -349,7 +349,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 25 - 28 degrees
     elif avtemp >= 25.1 and avtemp <= 28.0:
-        basetime = 2.4
+        basetime = 2.6
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 25 and 28 degrees')
         
@@ -367,7 +367,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 28 - 31 degrees
     elif avtemp >= 28.1 and avtemp <= 31.0:
-        basetime = 2.5
+        basetime = 2.9
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 28 and 31 degrees')
         
@@ -385,7 +385,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature is between 31 - 34 degrees
     elif avtemp >= 31.1 and avtemp <= 34.0:
-        basetime = 2.6
+        basetime = 3.2
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 31 and 34 degrees')
         
@@ -403,7 +403,7 @@ def getseconds(avtemp,avhum,avpress):
     
     #If temperature over 34 degrees
     elif avtemp >= 34.1:
-        basetime = 2.8
+        basetime = 3.5
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is over 34 degrees')
         
