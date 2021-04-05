@@ -800,8 +800,36 @@ def tempcorrection(temperature):
     cpu_temp = array2[0]
     
     #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
-    temp = temp - ((float(cpu_temp) - temp)/2)
+    temp = temp - ((float(cpu_temp) - temp)/2.8)
     temp = round(temp, 1)
-    temp = temp - 16
+    temp = temp - 10
     
     return temp
+
+#This function checks weather entries for the last 1 days to see if it was newly started from a long sleep to prevent rebooting for no irrigation time before the system has reached normal working temperature
+def longsleep():
+    try:
+        config = json.loads(open('/var/www/html/config.json').read())
+        db = MySQLdb.connect(config['database']['host'],config['database']['user'],config['database']['password'],config['database']['dbname'] )
+        cursor = db.cursor()
+        sql = "SELECT *, (DATE(NOW()) - INTERVAL 1 DAY) AS diff FROM `weather_data` WHERE DATETIME >= (DATE(NOW()) - INTERVAL 1 DAY)"
+        cursor.execute(sql)
+        global delay
+        fetched = cursor.fetchall()
+        cursor.close()
+        db.close()
+        if len(fetched) > 2000:
+            just_woke = False
+            #Logging the event
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Main.py - System has not recently woken up from long sleep')
+        else:
+            just_woke = True
+            #Logging the event
+            logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+            logging.info('Main.py - System has recently woken up from long sleep')
+            
+        return just_woke; #Returns True or False
+    
+    except:
+        print("Database connection failed")

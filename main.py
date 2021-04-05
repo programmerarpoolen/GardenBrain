@@ -4,7 +4,7 @@
 import time as t
 import subprocess
 from datetime import datetime, time
-from functions import dbfetch,dbupdate,weather_cleanup,dolog,sysstart,logsave
+from functions import dbfetch,dbupdate,weather_cleanup,dolog,sysstart,logsave,longsleep
 
 #Writing system start time to database for showing uptime in the Dashboard
 sysstart()
@@ -105,14 +105,16 @@ try:
         #If time is after 00:01 then we change logsaved variable back to 0
         elif now_time > time(00,01):
             logsaved = 0
-            
-        #Rebooting the system if time is more than 2:30 and there's 0 seconds on night irrigation
-        if now_time > time(02,30) and float(nirriseconds) < 0.5:
-            dbupdate('REBOOTNOW','weather_settings','1')
-            dolog("Main.py - Rebooting the system as time is after 2:30 and we still have 0 seconds of night irrigation logged")
         
         #Sleeping for 15 minutes (900 seconds) before starting time checking loop again
         t.sleep(900)
+            
+        #Rebooting the system if time is more than 2:30 (but less than 7:30) and there's 0 seconds on night irrigation
+        if now_time > time(02,30) and float(nirriseconds) < 0.5 and now_time < time(07,30):
+            #Checking if there are weather data in the database for the last day to see if it's freshly started after a long time offline
+            if longsleep() == True:
+                dbupdate('REBOOTNOW','weather_settings','1')
+                dolog("Main.py - Rebooting the system as time is after 2:30 and we still have 0 seconds of night irrigation logged")
 
 except KeyboardInterrupt:
     pass
