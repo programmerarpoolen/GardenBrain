@@ -821,26 +821,38 @@ def tempcorrection(temperature):
     temp = temp - ((float(cpu_temp) - temp)/5.466)
     temp = round(temp, 1)
     
-    if temp > -5 and temp < 4:
-        temp = temp - 9
+    if temp < 4:
+        temp = 4
     elif temp >= 4 and temp < 10:
-        temp = temp - 7
+        temp = temp
     elif temp >= 10 and temp < 14:
-        temp = temp - 7
+        temp = temp - 6
     elif temp >= 14 and temp < 18:
-        temp = temp - 7
+        temp = temp - 12
     elif temp >= 18 and temp < 22:
-        temp = temp - 7
+        temp = temp - 14
     elif temp >= 22 and temp < 25:
-        temp = temp - 7
+        temp = temp - 14
     elif temp >= 25 and temp < 28:
-        temp = temp - 7
+        temp = temp - 14
     elif temp >= 28 and temp < 31:
-        temp = temp - 7
+        temp = temp - 14
     elif temp >= 31 and temp < 34:
-        temp = temp - 7
+        temp = temp - 14
+    elif temp >= 34 and temp < 37:
+        temp = temp - 14
+    elif temp >= 37 and temp < 40:
+        temp = temp - 14
+    elif temp >= 40 and temp < 43:
+        temp = temp - 14
+    elif temp >= 43 and temp < 46:
+        temp = temp - 14
+    elif temp >= 46 and temp < 49:
+        temp = temp - 14
+    elif temp >= 49 and temp < 52:
+        temp = temp - 14
     else:
-        temp = temp - 10
+        temp = temp - 15
     
     return temp
 
