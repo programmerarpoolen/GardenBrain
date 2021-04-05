@@ -258,7 +258,25 @@ def getseconds(avtemp,avhum,avpress):
     basetime = 0.0
     
     #If temperature is between 4 - 10 degrees
-    if avtemp >= 4.0 and avtemp <= 10.0:
+    if avtemp >= -5 and avtemp <= 3.9:
+        basetime = 0.1
+        logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+        logging.info('Functions.py - Temperature is between -5 and 4 degrees')
+        
+        #If humidity is over 50 %
+        if avhum >= 50:
+            basetime = basetime - 0.05
+        
+        #If pressure is under 995
+        if avpress < 995:
+            basetime = basetime - 0.01
+        
+        #If pressure is over 1005
+        if avpress > 1005:
+            basetime = basetime + 0.01
+    
+    #If temperature is between 4 - 10 degrees
+    elif avtemp >= 4.0 and avtemp <= 10.0:
         basetime = 0.3
         logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
         logging.info('Functions.py - Temperature is between 4 and 10 degrees')
@@ -800,9 +818,29 @@ def tempcorrection(temperature):
     cpu_temp = array2[0]
     
     #Correcting the temperature using the CPU temperature and a factor (default 5.466) and printing the value
-    temp = temp - ((float(cpu_temp) - temp)/2.8)
+    temp = temp - ((float(cpu_temp) - temp)/5.466)
     temp = round(temp, 1)
-    temp = temp - 10
+    
+    if temp > -5 and temp < 4:
+        temp = temp - 9
+    elif temp >= 4 and temp < 10:
+        temp = temp - 7
+    elif temp >= 10 and temp < 14:
+        temp = temp - 7
+    elif temp >= 14 and temp < 18:
+        temp = temp - 7
+    elif temp >= 18 and temp < 22:
+        temp = temp - 7
+    elif temp >= 22 and temp < 25:
+        temp = temp - 7
+    elif temp >= 25 and temp < 28:
+        temp = temp - 7
+    elif temp >= 28 and temp < 31:
+        temp = temp - 7
+    elif temp >= 31 and temp < 34:
+        temp = temp - 7
+    else:
+        temp = temp - 10
     
     return temp
 
