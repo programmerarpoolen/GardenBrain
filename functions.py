@@ -811,6 +811,10 @@ def tempcorrection(temperature):
     
     temp = round(temperature, 1)
     
+    #Logging the event
+    logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+    logging.info('Functions.py - Measured temperature before corrections was: ',temp)
+    
     #Getting the CPU temperature for corrections
     board_temp = subprocess.check_output("vcgencmd measure_temp", shell=True)
     array = board_temp.split("=")
@@ -821,38 +825,46 @@ def tempcorrection(temperature):
     temp = temp - ((float(cpu_temp) - temp)/5.466)
     temp = round(temp, 1)
     
-    if temp < 4:
-        temp = 4
-    elif temp >= 4 and temp < 10:
-        temp = temp
-    elif temp >= 10 and temp < 14:
-        temp = temp - 6
-    elif temp >= 14 and temp < 18:
+    #Logging the event
+    logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+    logging.info('Functions.py - Temperature after CPU temperature adjustments were: ',temp)
+    
+    if temp < 4: #For when there's sub zero temperature readings
+        temp = 1
+    elif temp >= 4 and temp < 10: #Hopefully these readings are when the system is just started
+        temp = 2
+    elif temp >= 10 and temp < 14: #Aiming for a real temperature of 2-6 degrees
+        temp = temp - 8
+    elif temp >= 14 and temp < 18: #Aiming for a real temperature of 2-6 degrees
         temp = temp - 12
-    elif temp >= 18 and temp < 22:
+    elif temp >= 18 and temp < 22: #Aiming for a real temperature of 4-8 degrees
         temp = temp - 14
-    elif temp >= 22 and temp < 25:
+    elif temp >= 22 and temp < 25: #Aiming for a real temperature of 8-11 degrees
         temp = temp - 14
-    elif temp >= 25 and temp < 28:
+    elif temp >= 25 and temp < 28: #Aiming for a real temperature of 11-14 degrees
         temp = temp - 14
-    elif temp >= 28 and temp < 31:
+    elif temp >= 28 and temp < 31: #Aiming for a real temperature of 14-17 degrees
         temp = temp - 14
-    elif temp >= 31 and temp < 34:
+    elif temp >= 31 and temp < 34: #Aiming for a real temperature of 17-20 degrees
         temp = temp - 14
-    elif temp >= 34 and temp < 37:
+    elif temp >= 34 and temp < 37: #Aiming for a real temperature of 20-23 degrees
         temp = temp - 14
-    elif temp >= 37 and temp < 40:
+    elif temp >= 37 and temp < 40: #Aiming for a real temperature of 23-26 degrees
         temp = temp - 14
-    elif temp >= 40 and temp < 43:
+    elif temp >= 40 and temp < 43: #Aiming for a real temperature of 26-29 degrees
         temp = temp - 14
-    elif temp >= 43 and temp < 46:
+    elif temp >= 43 and temp < 46: #Aiming for a real temperature of 29-32 degrees
         temp = temp - 14
-    elif temp >= 46 and temp < 49:
+    elif temp >= 46 and temp < 49: #Aiming for a real temperature of 32-35 degrees
         temp = temp - 14
-    elif temp >= 49 and temp < 52:
+    elif temp >= 49 and temp < 52: #Aiming for a real temperature of 35-38 degrees
         temp = temp - 14
     else:
-        temp = temp - 15
+        temp = temp - 15 #For when the temperature is really high for any reason
+    
+    #Logging the event
+    logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
+    logging.info('Functions.py - Temperature after corrections was: ',temp)
     
     return temp
 
