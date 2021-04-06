@@ -813,7 +813,7 @@ def tempcorrection(temperature):
     
     #Logging the event
     logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
-    logging.info('Functions.py - Measured temperature before corrections was: ',temp)
+    logging.info('Functions.py - Measured temperature before corrections was: '+str(temp))
     
     #Getting the CPU temperature for corrections
     board_temp = subprocess.check_output("vcgencmd measure_temp", shell=True)
@@ -827,7 +827,7 @@ def tempcorrection(temperature):
     
     #Logging the event
     logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
-    logging.info('Functions.py - Temperature after CPU temperature adjustments were: ',temp)
+    logging.info('Functions.py - Temperature after CPU temperature adjustments were: '+str(temp))
     
     if temp < 4: #For when there's sub zero temperature readings
         temp = 1
@@ -864,7 +864,7 @@ def tempcorrection(temperature):
     
     #Logging the event
     logging.basicConfig(format='%(asctime)s %(message)s', filename='/home/pi/GardenBrain/events.log', level=logging.INFO)
-    logging.info('Functions.py - Temperature after corrections was: ',temp)
+    logging.info('Functions.py - Temperature after corrections was: '+str(temp))
     
     return temp
 
